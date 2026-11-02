@@ -1,0 +1,24 @@
+# PROMPT ID: 8.8 | TITLE: AUTOMATED SPDX GPLv3 HEADER INJECTION SCRIPT
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Linux Build Automation & Legal Compliance Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable POSIX/Bash script code and the Makefile snippet. Do not include conversational prose.
+
+TASK:
+Create a helper script at `scripts/apply-spdx-headers.sh` to automatically insert the `SPDX-License-Identifier: GPL-3.0-or-later` header across all project source files and scripts, and provide a `Makefile` target to run it.
+
+FILE 1: `scripts/apply-spdx-headers.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Search the repository (excluding `.git/`, `work/`, `build_out/`, `repo/dists/`, `repo/pool/`, and `flatpak-repo/`) for the following file types:
+   - C-style comment files (`*.rs`, `*.vala`, `*.c`, `*.h`): Use `// SPDX-License-Identifier: GPL-3.0-or-later`.
+   - Hash-comment files (`*.sh`, `*.py`, `*.R`, `*.yml`, `*.yaml`, `*.conf`, `*.pref.chroot`, `*.list.chroot`, `Makefile`, `Containerfile`): Use `# SPDX-License-Identifier: GPL-3.0-or-later`.
+   - CSS files (`*.css`): Use `/* SPDX-License-Identifier: GPL-3.0-or-later */`.
+3. For each file, check the first 15 lines using `head -n 15` and `grep -q "SPDX-License-Identifier: GPL-3.0-or-later"`.
+4. Skip the file if the SPDX header is already present.
+5. If the file starts with a shebang (`#!` on line 1), insert the `# SPDX-License-Identifier: GPL-3.0-or-later` comment on line 2 immediately after the shebang while preserving file permissions (`chmod --reference`).
+6. If the file does not start with a shebang, prepend the appropriate comment syntax to line 1 while preserving file permissions.
+7. Print `"UPDATED: <filepath>"` for each modified file and a final summary count (`"OK: SPDX GPL-3.0-or-later headers applied."`).
+
+FILE 2: `Makefile` target snippet (`spdx-headers`)
+1. Add a `spdx-headers` phony target that sets `chmod +x scripts/apply-spdx-headers.sh` and runs `./scripts/apply-spdx-headers.sh`.

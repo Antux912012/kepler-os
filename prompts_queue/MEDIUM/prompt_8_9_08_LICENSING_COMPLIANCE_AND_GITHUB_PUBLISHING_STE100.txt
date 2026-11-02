@@ -1,0 +1,27 @@
+# PROMPT ID: 8.9 | TITLE: LOCAL GIT HOOK INSTALLER
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Git Automation & Developer Tooling Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable POSIX/Bash script code and the Makefile snippet. Do not include conversational prose.
+
+TASK:
+Create a helper script at `scripts/install-git-hooks.sh` to install local Git `pre-commit` and `commit-msg` hooks inside `.git/hooks/` and provide a `Makefile` target (`git-hooks`) to run it.
+
+FILE 1: `scripts/install-git-hooks.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Verify that the `.git/hooks` directory exists in the current working directory. If not, print `"ERROR: Current directory is not a Git repository."` and exit with code 1.
+3. Generate `.git/hooks/pre-commit`:
+   - Use `#!/bin/bash` and `set -euo pipefail`.
+   - Execute `./scripts/apply-spdx-headers.sh` so all source files and scripts contain the `SPDX-License-Identifier: GPL-3.0-or-later` header before commit.
+   - Stage any files modified by the header script using `git add -u`.
+4. Generate `.git/hooks/commit-msg`:
+   - Use `#!/bin/bash` and `set -euo pipefail`.
+   - Read the commit message file passed as `$1` (`COMMIT_MSG_FILE="$1"`).
+   - Verify with `grep -Eq '^Signed-off-by: .+ <.+@.+>$' "$COMMIT_MSG_FILE"` that the commit message contains a valid Developer Certificate of Origin (DCO 1.1) `Signed-off-by:` trailer.
+   - If the trailer is missing, print `"ERROR: Commit lacks a DCO Signed-off-by trailer. Run git commit -s."` and exit with code 1.
+5. Set executable permissions (`chmod +x`) on `.git/hooks/pre-commit` and `.git/hooks/commit-msg`.
+6. Print `"OK: Local Git pre-commit and commit-msg hooks installed."`
+
+FILE 2: `Makefile` target snippet (`git-hooks`)
+1. Add a `git-hooks` phony target that sets `chmod +x scripts/install-git-hooks.sh` and runs `./scripts/install-git-hooks.sh`.

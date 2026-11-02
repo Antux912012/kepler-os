@@ -1,0 +1,34 @@
+name: Publish GitHub Docs and Wiki
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'wiki/**'
+      - 'README.md'
+      - 'NOTICE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Documentation Compliance
+        run: |
+          test -f README.md
+          test -f NOTICE.md
+          test -f LICENSE
+          grep -q "EU AI Act" NOTICE.md
+          grep -q "NASA" NOTICE.md
+
+      - name: Sync Wiki Directory
+        uses: Andrew-Chen-Wang/github-wiki-action@v4
+        with:
+          path: wiki/
+        continue-on-error: true

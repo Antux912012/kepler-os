@@ -1,0 +1,18 @@
+# PROMPT ID: 8.4 | TITLE: GITHUB WIKI SYNC AND RELEASE WORKFLOW
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: GitHub Actions & Release Automation Architect.
+STANDARD: ASD-STE100. Output only valid YAML code with strict 2-space indentation.
+
+TASK:
+Create a GitHub Actions workflow at `.github/workflows/publish-github-docs-and-wiki.yml` to automate repository compliance checks and GitHub Wiki publishing.
+
+TECHNICAL REQUIREMENTS:
+2. Job 1 (`compliance_check`):
+   - Run on `ubuntu-latest`.
+3. Job 2 (`sync_github_wiki`):
+   - Depend on `compliance_check` (`needs: compliance_check`).
+   - Checkout the main repository.
+   - Clone the repository's GitHub Wiki (`https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git`).
+   - Copy all `.md` files from `wiki/` into the cloned Wiki repository, commit with message `"ci(wiki): sync ASD-STE100 documentation from main"`, and push to the Wiki remote.

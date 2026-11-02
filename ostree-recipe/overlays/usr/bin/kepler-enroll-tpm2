@@ -1,0 +1,48 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+echo "=== [Kepler OS] Enrolling TPM 2.0 Security Binding for LUKS2 Volume ==="
+
+# Check TPM2 device
+if [ ! -e /dev/tpmrm0 ]; then
+    MSG="No hardware TPM 2.0 chip detected (/dev/tpmrm0 missing).\nTPM 2.0 automatic unlock cannot be enabled on this system."
+    if command -v zenity >/dev/null 2>&1; then
+        zenity --error --title="TPM 2.0 Not Found" --text="$MSG"
+    else
+        echo -e "ERROR: $MSG" >&2
+    fi
+    exit 1
+fi
+
+# Detect underlying block device backing root /sysroot
+ROOT_DEV=$(findmnt -n -o SOURCE /sysroot 2>/dev/null || findmnt -n -o SOURCE / 2>/dev/null || true)
+if [ -z "$ROOT_DEV" ]; then
+    echo "ERROR: Unable to detect root block device." >&2
+    exit 1
+fi
+
+# Resolve mapped dm-crypt device to parent
+DM_NAME=$(basename "$ROOT_DEV")
+if [ ! -e "/sys/class/block/$DM_NAME/slaves" ]; then
+    echo "ERROR: Root filesystem is not encrypted with LUKS2 ($ROOT_DEV)." >&2
+    exit 1
+fi
+
+PARENT_DEV=$(ls "/sys/class/block/$DM_NAME/slaves" | head -n 1)
+LUKS_DEV="/dev/$PARENT_DEV"
+
+echo "Detected encrypted root partition: $LUKS_DEV"
+
+echo "Generating fallback recovery key..."
+systemd-cryptenroll --recovery-key "$LUKS_DEV"
+
+echo "Enrolling TPM 2.0 bound to PCR 7 (Secure Boot) and PCR 14 (MOK state)..."
+systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7+14 "$LUKS_DEV"
+
+echo "Updating /etc/crypttab with tpm2-device=auto option..."
+if [ -f /etc/crypttab ]; then
+    sed -i 's/\(none\s\+luks\)/\1,tpm2-device=auto,discard/' /etc/crypttab || true
+fi
+
+echo "OK: TPM 2.0 LUKS2 enrollment complete."

@@ -1,0 +1,29 @@
+# PROMPT ID: 1.1 | TITLE: WORKSPACE INITIALIZATION
+# TARGET MODEL: Gemini 3.8 Flash [LOW] (Raw: LOW)
+# SOURCE MODULE: 01_CONTAINER_AND_BUILD_PIPELINE.md
+
+ROLE: Linux Immutable Build System Automation Agent.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable code. Do not add conversational explanations.
+
+TASK:
+Write a POSIX shell script named `init-tree.sh` that creates the following directory structure inside the current working directory:
+- ostree-recipe/overlays/usr/lib/sysctl.d
+- ostree-recipe/overlays/usr/lib/udev/rules.d
+- ostree-recipe/overlays/usr/share/glib-2.0/schemas
+- ostree-recipe/overlays/usr/local/bin
+- ostree-recipe/overlays/etc/default
+- ostree-recipe/overlays/etc/distrobox
+- ostree-recipe/scripts
+- profile/auto
+- profile/config/archives
+- profile/config/package-lists
+- profile/config/hooks/normal
+- profile/config/includes.chroot/etc/calamares/modules
+- profile/config/includes.chroot/etc/calamares/branding/kepler
+- profile/config/includes.chroot/ostree-repo
+- build_out
+
+CONSTRAINTS:
+1. Use `mkdir -p` for all paths.
+2. Set `set -eu` at the top of the script.
+3. Print "OK: Immutable OSTree directory tree created." upon completion.

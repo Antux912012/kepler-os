@@ -1,0 +1,25 @@
+# PROMPT ID: 2.4 | TITLE: CACHYOS KERNEL V3 & GLIBC-HWCAPS X86-64-V3 UPDATE CHECKER
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 02_VOYAGER_PPA_AND_CACHY_KERNEL_V3.md
+
+ROLE: Linux Kernel & Microarchitecture Optimization Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts. Do not include conversational prose.
+
+TASK:
+Create two scripts in `scripts/` to check for upstream `linux-cachyos` and Debian Testing library updates, and to compile `x86-64-v3` optimized shared libraries into `/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v3/` for `Voyager-PPA`.
+
+FILE 1: `scripts/check-voyager-upstream-updates.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Query the upstream CachyOS Linux kernel Git repository (`https://github.com/CachyOS/linux-cachyos.git`) using `git ls-remote --tags` to identify the latest stable kernel tag.
+4. Compare the upstream version against the currently published `linux-image-cachyos-bore-v3` version in `Voyager-PPA` (`repo/dists/testing/main/binary-amd64/Packages`).
+5. Query Debian Testing (`rmadison` or `apt-cache policy`) for source package updates to critical scientific and compression libraries: `openblas`, `zlib-ng`, `zstd`, and `fftw3`.
+6. Write a JSON status file `build_out/upstream-update-status.json` containing `"rebuild_kernel": true|false`, `"rebuild_hwcaps": true|false`, and the detected version strings.
+7. Exit with code 0 and print `"UPDATE_REQUIRED=1"` if either kernel or `glibc-hwcaps` packages require rebuilding.
+
+FILE 2: `scripts/build-glibc-hwcaps-v3.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Export `CFLAGS="-march=x86-64-v3 -mtune=generic -O3 -pipe -fno-plt"` and `CXXFLAGS="-march=x86-64-v3 -mtune=generic -O3 -pipe -fno-plt"`.
+4. Build optimized shared libraries (`libopenblas.so.0`, `libzstd.so.1`, `libz.so.1`, `libfftw3.so.3`) and package them into a Debian package named `kepler-glibc-hwcaps-v3` that installs the `.so` files strictly into `/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v3/`.
+5. Ensure the dynamic linker (`ld.so`) automatically selects these `x86-64-v3` libraries on Intel 4th Gen Haswell+ and AMD Excavator+ CPUs without overwriting default Debian Testing libraries in `/usr/lib/x86_64-linux-gnu/`.

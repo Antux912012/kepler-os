@@ -1,0 +1,26 @@
+# PROMPT ID: 5.2 | TITLE: VOYAGER-FLATPAK GITHUB ACTIONS WORKFLOW
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 05_CI_CD_VOYAGER_PPA_AND_FLATPAK_STE100.md
+
+ROLE: Flatpak & OSTree Release Engineer.
+STANDARD: ASD-STE100. Output only valid YAML code with strict 2-space indentation.
+
+TASK:
+Create a GitHub Actions workflow file at `.github/workflows/publish-voyager-flatpak.yml` to compile, sign, and publish Arda-tech and Kepler OS applications to `Voyager-Flatpak`.
+
+TECHNICAL REQUIREMENTS:
+1. Trigger the workflow on `push` to `main` inside `flatpaks/**` and on `workflow_dispatch`.
+2. Use `ubuntu-latest` with a privileged container or install `flatpak`, `flatpak-builder`, `ostree`, `gnupg`, and `elfutils`.
+3. Step 1 (Setup Flatpak Runtimes):
+   - Add the `flathub` remote (`https://dl.flathub.org/repo/flathub.flatpakrepo`).
+   - Install `org.gnome.Platform//50` and `org.gnome.Sdk//50` (or latest available GNOME SDK) and `org.freedesktop.Sdk.Extension.rust-stable` + `org.freedesktop.Sdk.Extension.vala`.
+4. Step 2 (Import GPG Signing Key):
+   - Import the private GPG key from `VOYAGER_GPG_PRIVATE_KEY` into a dedicated GPG home directory.
+   - Read the GPG Key ID from `VOYAGER_GPG_KEY_ID`.
+5. Step 3 (Build and Export to OSTree Repo):
+   - Run `flatpak-builder` with `--repo=flatpak-repo`, `--force-clean`, `--gpg-sign=${VOYAGER_GPG_KEY_ID}`, and `--arch=x86_64` on each manifest inside `flatpaks/*.json` or `flatpaks/*.yml`.
+6. Step 4 (Generate Repository Summary and `.flatpakrepo` File):
+   - Run `flatpak build-update-repo --generate-static-deltas --gpg-sign=${VOYAGER_GPG_KEY_ID} flatpak-repo`.
+   - Generate the `voyager.flatpakrepo` file containing the `Title=Voyager-Flatpak (Arda-Tech Official)`, `Url=https://flatpak.voyager-project.org/repo`, and the base64-encoded `GPGKey`.
+7. Step 5 (Publish Static Repo):
+   - Sync `flatpak-repo/` and `voyager.flatpakrepo` to the production target (`gh-pages` or remote VPS via `rsync`).

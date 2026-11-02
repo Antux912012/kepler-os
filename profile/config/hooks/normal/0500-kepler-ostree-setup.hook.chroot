@@ -1,0 +1,37 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -e
+
+echo "=== [Kepler OS] Configuring OSTree and Flatpak integration ==="
+
+# Register Flathub and Voyager-Flatpak system-wide
+mkdir -p /var/lib/flatpak
+flatpak remote-add --if-not-exists --system flathub https://dl.flathub.org/repo/flathub.flatpakrepo || true
+flatpak remote-add --if-not-exists --system voyager-flatpak https://flatpak.voyager-project.org/voyager.flatpakrepo || true
+
+# Enable essential systemd services
+systemctl enable ostree-remount.service || true
+systemctl enable zramswap.service || true
+systemctl enable NetworkManager.service || true
+systemctl enable gdm3.service || true
+
+# Configure dracut for OSTree
+mkdir -p /etc/dracut.conf.d
+cat << 'EOF' > /etc/dracut.conf.d/10-kepler-ostree.conf
+add_dracutmodules+=" ostree "
+compress="zstd"
+EOF
+
+# Remove default bloatware games
+apt-get purge -y \
+    gnome-games \
+    gnome-2048 \
+    aisleriot \
+    gnome-mahjongg \
+    gnome-mines \
+    gnome-sudoku \
+    tali || true
+
+apt-get autoremove -y --purge || true
+
+echo "OK: Kepler OSTree and Flatpak setup hook completed."

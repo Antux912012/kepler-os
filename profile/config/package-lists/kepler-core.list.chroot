@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Kepler Core System & Immutable OSTree Runtime
+ostree
+ostree-boot
+dracut
+dracut-core
+bubblewrap
+fuse-overlayfs
+# live-boot, live-config, calamares are installed on the Live ISO, not in the OSTree rootfs
+systemd-timesyncd
+sudo
+curl
+wget
+git
+zram-tools
+fwupd
+# ananicy-cpp (in Voyager-PPA)
+mesa-vulkan-drivers
+intel-microcode
+amd64-microcode
+squashfs-tools
+os-prober
+cryptsetup
+btrfs-progs
+linux-image-amd64

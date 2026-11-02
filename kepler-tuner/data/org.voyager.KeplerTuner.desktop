@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Kepler Kernel & Atomic OS Tuner
+Comment=Fine-tune kernel parameters, CPU schedulers, and OSTree rollbacks
+Exec=/usr/bin/kepler-tuner-gui
+Icon=preferences-system-performance
+Terminal=false
+Type=Application
+Categories=System;Settings;GTK;
+StartupNotify=true

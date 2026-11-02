@@ -1,0 +1,30 @@
+# PROMPT ID: 1.4 | TITLE: OCI BOOTABLE CONTAINER ENCAPSULATION AND GHCR.IO PUSH
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 01_CONTAINER_AND_BUILD_PIPELINE.md
+
+ROLE: Linux Bootable Container (bootc / OSTree OCI) Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts and Makefile snippets. Do not include conversational prose.
+
+TASK:
+Create the script `export-ostree-oci.sh` and the `Makefile` target to encapsulate the Kepler OS OSTree commit (`kepler/testing/x86_64-v3/gnome`) into an OCI bootable container archive and push it to GitHub Container Registry (`ghcr.io`).
+
+FILE 1: `export-ostree-oci.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Define variables:
+   - `REPO_DIR="/workspace/profile/config/includes.chroot/ostree-repo"`
+   - `OSTREE_BRANCH="kepler/testing/x86_64-v3/gnome"`
+   - `OCI_ARCHIVE="/workspace/build_out/kepler-os-immutable-x86_64-v3-oci.tar"`
+   - `GHCR_IMAGE="${GHCR_IMAGE:-ghcr.io/antux912012/kepler-os-immutable:testing-x86_64-v3}"`
+3. Verify that `"$REPO_DIR/config"` exists and that branch `"$OSTREE_BRANCH"` has a valid commit.
+4. Encapsulate the OSTree commit into an OCI archive using `ostree container encapsulate` (or `rpm-ostree compose container-encapsulate` / `bootc` compatible format):
+   - Set label `containers.bootc=1` (`--label=containers.bootc=1`).
+   - Set label `ostree.bootable=true` (`--label=ostree.bootable=true`).
+   - Set label `org.opencontainers.image.licenses=GPL-3.0-or-later`.
+   - Set label `org.opencontainers.image.title="Kepler OS Immutable (x86-64-v3)"`.
+   - Output to `oci-archive:${OCI_ARCHIVE}`.
+5. If environment variables `GHCR_TOKEN` and `GHCR_USER` are set, authenticate and push the OCI archive directly to `docker://${GHCR_IMAGE}` and `docker://${GHCR_IMAGE%:*}:$(date -u +%Y%m%d)` using `skopeo copy --dest-creds "${GHCR_USER}:${GHCR_TOKEN}" "oci-archive:${OCI_ARCHIVE}" "docker://${GHCR_IMAGE}"`.
+6. Print explicit ASD-STE100 instructions showing how a deployed Kepler OS system can switch to or upgrade from the OCI registry image:
+   - `ostree container image deploy --sysroot=/ --stateroot=kepler --imgref="ostree-unverified-registry:${GHCR_IMAGE}"` (or `bootc switch ${GHCR_IMAGE}`).
+
+FILE 2: `Makefile` target snippet (`oci-bootc`)
+1. Add target `oci-bootc` depending on `ostree-commit` that runs `/workspace/export-ostree-oci.sh` inside the builder container, passing `GHCR_USER`, `GHCR_TOKEN`, and `GHCR_IMAGE`.

@@ -1,0 +1,2 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# deb [signed-by=/usr/share/keyrings/voyager-ppa.key.gpg] https://ppa.voyager-project.org/debian testing main

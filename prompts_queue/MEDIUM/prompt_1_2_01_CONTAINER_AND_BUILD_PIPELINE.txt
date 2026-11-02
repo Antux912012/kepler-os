@@ -1,0 +1,23 @@
+# PROMPT ID: 1.2 | TITLE: CONTAINERFILE AND MAKEFILE FOR DEBOS/OSTREE
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 01_CONTAINER_AND_BUILD_PIPELINE.md
+
+ROLE: Linux Container & OSTree Build Engineer.
+STANDARD: ASD-STE100. Output only the two requested code blocks with their filenames as headers.
+
+TASK:
+Generate two files for the Kepler OS Immutable OSTree ISO build environment:
+
+FILE 1: `Containerfile`
+1. Use `debian:testing-slim` as the base image.
+2. Set `ENV DEBIAN_FRONTEND=noninteractive`.
+3. Install these exact packages in one `RUN` layer:
+4. Clean the APT cache (`apt-get clean` and remove `/var/lib/apt/lists/*`).
+5. Set `WORKDIR /workspace`.
+6. Set `ENTRYPOINT ["/workspace/build-iso.sh"]`.
+
+FILE 2: `Makefile`
+1. Set default variable `ENGINE ?= podman`, `IMAGE_NAME = kepler-ostree-builder:latest`, and `OSTREE_BRANCH = kepler/testing/x86_64-v3/gnome`.
+2. Define target `builder`: build the image from `Containerfile`.
+3. Define target `ostree-commit`: run the container with `--rm -it --privileged -v $(PWD):/workspace:Z --entrypoint /workspace/build-ostree-commit.sh $(IMAGE_NAME)` to build the rootfs and commit it to `profile/config/includes.chroot/ostree-repo`.
+4. Define target `iso`: depend on `ostree-commit`, create `build_out`, and run the container with `--rm -it --privileged -v $(PWD):/workspace:Z $(IMAGE_NAME)` to package the Live Installer ISO containing the embedded OSTree repository.

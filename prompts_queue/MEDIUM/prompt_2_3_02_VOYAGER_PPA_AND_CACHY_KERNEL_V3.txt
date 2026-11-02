@@ -1,0 +1,21 @@
+# PROMPT ID: 2.3 | TITLE: VOYAGER-PPA AND VOYAGER-OSTREE PUBLISH SCRIPTS
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 02_VOYAGER_PPA_AND_CACHY_KERNEL_V3.md
+
+ROLE: Debian & OSTree Repository Maintainer.
+STANDARD: ASD-STE100. Output only the configuration file and publish scripts.
+
+TASK:
+Create the configuration for `Voyager-PPA` (`reprepro`) and `Voyager-OSTree` (`ostree`).
+
+FILE 1: `repo/conf/distributions`
+1. Set `Origin: ppa.voyager-project.org`, `Label: Voyager-PPA`, `Codename: testing`, `Architectures: amd64`, `Components: main`, `SignWith: yes`.
+
+FILE 2: `repo/publish-deb.sh`
+1. Accept a `.deb` file path as `$1` and run `reprepro -b ./repo includedeb testing "$1"`.
+
+FILE 3: `repo/publish-ostree-commit.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Accept the GPG Key ID as `$1` (`GPG_KEY_ID="$1"`).
+3. Pull the newly built commit from `profile/config/includes.chroot/ostree-repo` into the production `./ostree-prod-repo` (`ostree --repo=./ostree-prod-repo pull-local profile/config/includes.chroot/ostree-repo kepler/testing/x86_64-v3/gnome`).
+4. Sign the commit and summary using `ostree --repo=./ostree-prod-repo gpg-sign kepler/testing/x86_64-v3/gnome "$GPG_KEY_ID"` and `ostree --repo=./ostree-prod-repo summary -u --gpg-sign="$GPG_KEY_ID"`.

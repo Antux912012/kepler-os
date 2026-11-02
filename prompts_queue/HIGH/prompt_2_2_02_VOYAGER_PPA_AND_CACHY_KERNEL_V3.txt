@@ -1,0 +1,22 @@
+# PROMPT ID: 2.2 | TITLE: KERNEL CACHYOS-BORE-V3 OSTREE BUILD SCRIPT
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 02_VOYAGER_PPA_AND_CACHY_KERNEL_V3.md
+
+ROLE: Linux Kernel & OSTree Packaging Engineer.
+STANDARD: ASD-STE100. Output only the requested bash script.
+
+TASK:
+Write a standalone build script named `build-cachy-kernel-v3.sh` to compile the CachyOS kernel into Debian `.deb` packages (`linux-image-cachyos-bore-v3` and `linux-headers-cachyos-bore-v3`) compatible with OSTree atomic deployments.
+
+TECHNICAL REQUIREMENTS:
+1. Target architecture flags: `KCFLAGS="-march=x86-64-v3 -mtune=generic -O3"` and `KCPPFLAGS="-march=x86-64-v3 -mtune=generic -O3"`.
+2. Kernel configuration options (`scripts/config`):
+   - Enable BORE scheduler (`CONFIG_SCHED_BORE=y`).
+   - Enable 1000Hz tickrate (`CONFIG_HZ_1000=y`, `CONFIG_HZ=1000`).
+   - Enable Full Preemption (`CONFIG_PREEMPT=y`).
+   - Enable `sched-ext` (`CONFIG_SCHED_CLASS_EXT=y`).
+   - Enable `zstd` module compression and `zram` (`CONFIG_ZRAM=m`, `CONFIG_CRYPTO_ZSTD=y`).
+   - Enable OverlayFS and SquashFS (`CONFIG_OVERLAY_FS=y`, `CONFIG_SQUASHFS=y`, `CONFIG_SQUASHFS_ZSTD=y`) required for OSTree `/usr` mounts and Flatpak/Podman layers.
+   - Enable Intel P-State and AMD P-State EPP (`CONFIG_X86_INTEL_PSTATE=y`, `CONFIG_X86_AMD_PSTATE=y`).
+3. Compile the kernel using `make -j$(nproc) bindeb-pkg` with `LOCALVERSION=-cachyos-bore-v3`.
+4. Include a post-install hook in the meta-package that generates the `dracut` initramfs with the `ostree` module (`dracut --force --add ostree /usr/lib/modules/${KVER}/initramfs.img ${KVER}`) and copies `vmlinuz` into `/usr/lib/modules/${KVER}/vmlinuz`.

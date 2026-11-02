@@ -1,0 +1,40 @@
+# PROMPT ID: 8.1 | TITLE: LEGAL NOTICES, EU AI ACT DISCLAIMER, AND UPSTREAM CREDITS
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Open-Source Legal Compliance & Technical Documentation Specialist.
+STANDARD: ASD-STE100 (Simplified Technical English). Use short sentences, active voice, and imperative verbs. Output only the requested Markdown and shell files.
+
+TASK:
+Create the legal compliance, attribution, and licensing files for the Kepler OS repository.
+
+FILE 1: `scripts/fetch-gplv3-license.sh`
+1. Use `#!/bin/sh` and `set -eu`.
+2. Download the official GNU General Public License v3.0 text from `https://www.gnu.org/licenses/gpl-3.0.txt` and save it as `LICENSE` in the repository root.
+3. Add standard SPDX license headers (`SPDX-License-Identifier: GPL-3.0-or-later`) check instructions.
+
+FILE 2: `NOTICE.md`
+Write a structured compliance document in strict ASD-STE100 containing the following four sections:
+
+SECTION 1: LICENSE SPECIFICATION (GNU GPL v3.0)
+- State that Kepler OS (including its build scripts, system configurations, Calamares branding, and `kepler-tuner` source code) is free software licensed under the **GNU General Public License v3.0 or later (`GPL-3.0-or-later`)**.
+- State that individual upstream packages included in the ISO image retain their respective open-source licenses as distributed by the Debian Project and upstream authors.
+
+SECTION 2: NON-AFFILIATION AND TRADEMARK DISCLAIMER
+- State clearly: **Kepler OS**, the **Voyager-PPA**, the **Voyager-Flatpak** repository, and the **Arda-Tech** project are independent open-source software initiatives.
+- State explicitly: This project has **no affiliation, association, endorsement, or connection** with the **National Aeronautics and Space Administration (NASA)**, the **European Space Agency (ESA)**, the NASA Kepler Space Telescope mission, the NASA Voyager Interstellar Mission, or any corporation, research institute, or commercial entity that holds trademarks or operates projects under the names **"Kepler"** or **"Voyager"**.
+- Explain that the names "Kepler" and "Voyager" are used strictly as tribute to the history of scientific astronomy and exploration.
+
+SECTION 3: EUROPEAN UNION AI ACT TRANSPARENCY DISCLAIMER (REGULATION EU 2024/1689)
+- Include a compliance notice under **Article 50 of the EU Artificial Intelligence Act (Regulation (EU) 2024/1689)**:
+  1. **AI-Assisted Development Disclosure:** Portions of the build orchestration scripts, documentation, and boilerplate code in this repository were generated and structured with the assistance of Large Language Models (Google Gemini) and verified by human maintainers.
+  2. **Local AI Runtime Disclosure:** When Kepler OS includes or integrates with local AI inference tools from the Arda-Tech ecosystem (such as *Sulimo* or *Elrond Assistance* in *Imladris*), all inference runs locally on the user's hardware. Users interact directly with an AI system, and all AI-generated scientific or code outputs must be verified by a qualified human before production or clinical use.
+  3. **Data Privacy & GDPR:** Kepler OS does not collect telemetry, personal data, or cloud AI prompts.
+
+SECTION 4: UPSTREAM ACKNOWLEDGMENTS AND CREDITS
+- Thank the following upstream projects and communities that make Kepler OS possible:
+  - **The Debian Project:** For the `debian-testing` (`forky`) base distribution, `live-build`, and packaging infrastructure.
+  - **The CachyOS Team:** For the `linux-cachyos` kernel patches, the BORE scheduler optimizations, and `x86-64-v3` microarchitecture pioneering.
+  - **The GNOME Project:** For the GNOME 50+ desktop environment, GTK4, and Libadwaita libraries.
+  - **The Calamares Project:** For the modular graphical system installer.
+  - **The Cytoscape Consortium, Python, R, and OpenBLAS Communities:** For the open-source scientific computing stack.

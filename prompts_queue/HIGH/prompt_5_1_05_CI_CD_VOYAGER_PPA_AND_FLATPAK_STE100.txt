@@ -1,0 +1,38 @@
+# PROMPT ID: 5.1 | TITLE: VOYAGER-PPA, VOYAGER-OSTREE, AND GHCR BOOTC GITHUB ACTIONS WORKFLOW
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 05_CI_CD_VOYAGER_PPA_AND_FLATPAK_STE100.md
+
+ROLE: DevOps & Immutable Linux CI/CD Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid YAML code. Ensure strict 2-space YAML indentation. Do not include conversational prose.
+
+TASK:
+Create a GitHub Actions workflow file at `.github/workflows/publish-voyager-ostree-and-ppa.yml` to build `.deb` packages, compose the immutable OSTree rootfs commit, sign with GPG, publish to `Voyager-PPA` and `Voyager-OSTree`, and push the OCI bootable container image to `ghcr.io`.
+
+TECHNICAL REQUIREMENTS:
+1. Trigger on `push` to `main` inside `packages/**`, `ostree-recipe/**`, or `export-ostree-oci.sh`, on a weekly `schedule` (`cron: '0 3 * * 0'` for rolling Debian Testing atomic snapshots), and via `workflow_dispatch`.
+2. Set workflow `permissions`:
+   - `contents: read`
+   - `packages: write` (required to push OCI bootable container images to `ghcr.io` using `GITHUB_TOKEN`).
+3. Run inside a privileged `debian:testing-slim` container.
+4. Step 1 (Dependencies): Install `build-essential`, `debhelper`, `devscripts`, `reprepro`, `ostree`, `mmdebstrap`, `debos`, `dracut`, `skopeo`, `gnupg`, `rsync`, `openssh-client`, and `git`.
+5. Step 2 (GPG Key Import):
+   - Import `VOYAGER_GPG_PRIVATE_KEY` in batch mode and read `VOYAGER_GPG_KEY_ID`.
+   - Export the public key to `repo/voyager-ppa.key.gpg` and `ostree-recipe/overlays/usr/share/keyrings/voyager-ostree.gpg`.
+6. Step 3 (Build `.deb` Packages & Update Voyager-PPA):
+   - Set `DEB_CFLAGS_APPEND="-march=x86-64-v3 -O3"` and `DEB_CXXFLAGS_APPEND="-march=x86-64-v3 -O3"`.
+   - Build packages in `packages/` and include them into `./repo` using `reprepro -b ./repo includedeb testing ../*.deb`.
+7. Step 4 (Compose & GPG-Sign Immutable OSTree Commit):
+   - Pull the existing production OSTree repo history via `rsync` from `VOYAGER_HOST` into `./ostree-prod-repo` (or initialize with `ostree --repo=./ostree-prod-repo init --mode=archive-z2`).
+   - Run `./build-ostree-commit.sh` to assemble the updated rootfs and commit it to branch `kepler/testing/x86_64-v3/gnome`.
+   - Sign the commit and update deltas:
+     * `ostree --repo=./ostree-prod-repo gpg-sign kepler/testing/x86_64-v3/gnome "${VOYAGER_GPG_KEY_ID}"`
+     * `ostree --repo=./ostree-prod-repo static-delta generate kepler/testing/x86_64-v3/gnome`
+     * `ostree --repo=./ostree-prod-repo summary -u --gpg-sign="${VOYAGER_GPG_KEY_ID}"`
+8. Step 5 (Encapsulate & Push OCI Bootable Container to `ghcr.io`):
+   - Set environment variables:
+     * `GHCR_USER: ${{ github.actor }}`
+     * `GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}`
+     * `GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/kepler-os-immutable:testing-x86_64-v3`
+   - Execute `./export-ostree-oci.sh` to encapsulate the OSTree commit (`--label=containers.bootc=1`, `--label=ostree.bootable=true`, `--label=org.opencontainers.image.licenses=GPL-3.0-or-later`) into an OCI archive and push both `:testing-x86_64-v3` and `:${DATE_STAMP}` tags to `ghcr.io` via `skopeo copy`.
+9. Step 6 (Deploy Voyager-PPA and Voyager-OSTree):
+   - Sync `./repo/` to `ppa.voyager-project.org` and `./ostree-prod-repo/` to `ostree.voyager-project.org/repo` using `rsync` over SSH.

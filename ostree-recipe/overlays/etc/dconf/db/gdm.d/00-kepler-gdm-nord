@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+gtk-theme='Adwaita-dark'
+font-name='Inter 11'
+cursor-theme='Adwaita'
+
+[org/gnome/desktop/background]
+primary-color='#2E3440'
+secondary-color='#3B4252'
+color-shading-type='solid'
+
+[org/gnome/login-screen]
+disable-user-list=false
+logo='/usr/share/pixmaps/kepler-os-logo.svg'

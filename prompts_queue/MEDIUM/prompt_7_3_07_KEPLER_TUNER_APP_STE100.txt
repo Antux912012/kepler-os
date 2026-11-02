@@ -1,0 +1,25 @@
+# PROMPT ID: 7.3 | TITLE: POLKIT, SYSTEMD, AND DEBIAN PACKAGING
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 07_KEPLER_TUNER_APP_STE100.md
+
+ROLE: Debian Immutable Package & Linux Security Integrator.
+STANDARD: ASD-STE100. Output only the requested configuration files.
+
+TASK:
+Create the system integration and Debian packaging files for `kepler-tuner` compatible with an immutable `/usr` layout.
+
+FILE 1: `data/org.voyager.KeplerTuned.policy` (Installed to `/usr/share/polkit-1/actions/`)
+1. Define action ID `org.voyager.KeplerTuned.manage`.
+2. Set `<allow_active>yes</allow_active>` for users in the `sudo` group.
+
+FILE 2: `data/kepler-tuned.service` (Installed to `/usr/lib/systemd/system/`)
+1. Configure `[Unit]` with `Description=Kepler OS Immutable Kernel, Power and OSTree Daemon`.
+2. Configure `[Service]` with `Type=dbus`, `BusName=org.voyager.KeplerTuned`, `ExecStart=/usr/libexec/kepler-tuned`, and `StateDirectory=kepler-tuner` (`ConfigurationDirectory=kepler-tuner`).
+3. Configure `[Install]` with `WantedBy=multi-user.target`.
+
+FILE 3: `data/org.voyager.KeplerTuner.desktop` (Installed to `/usr/share/applications/`)
+1. Set `Name=Kepler Kernel & Atomic OS Tuner`, `Exec=/usr/bin/kepler-tuner-gui`, `Icon=preferences-system-performance`, `Categories=System;Settings;GTK;`.
+
+FILE 4: `debian/control`
+1. Set `Source: kepler-tuner`, `Section: admin`, `Priority: optional`.
+2. Set `Build-Depends: debhelper-compat (= 13), cargo, rustc, libgtk-4-dev, libadwaita-1-dev, pkg-config`.

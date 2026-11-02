@@ -1,0 +1,27 @@
+# PROMPT ID: 6.1 | TITLE: MOK KEY GENERATION AND OSTREE KERNEL SIGNING
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 06_QEMU_KVM_TESTING_AND_SECURE_BOOT_STE100.md
+
+ROLE: Linux UEFI Secure Boot & OSTree Cryptography Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts. Do not add conversational explanations.
+
+TASK:
+Create two scripts to manage UEFI Secure Boot Machine Owner Keys (MOK) for Kepler OS Immutable.
+
+FILE 1: `scripts/generate-mok-keys.sh` (Host/Container helper script)
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Create directory `ostree-recipe/overlays/usr/share/kepler-mok/` and `keys/mok/`.
+3. Generate an X.509 RSA-4096 keypair valid for 3650 days using `openssl req`:
+   - Common Name (CN): `"Kepler OS Immutable Secure Boot Signing Key"`
+   - Private key output: `keys/mok/MOK.priv` (never committed into the final OSTree image)
+   - Public DER certificate output: `ostree-recipe/overlays/usr/share/kepler-mok/MOK.der`
+   - Public PEM certificate output: `keys/mok/MOK.pem`
+4. Set permissions `chmod 600` on `keys/mok/MOK.priv`.
+5. Print "OK: Kepler OS Immutable MOK keys generated."
+
+FILE 2: `ostree-recipe/scripts/sign-ostree-kernel.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Accept the staging rootfs path as `$1` (`ROOTFS="$1"`).
+3. Locate `keys/mok/MOK.priv` and `keys/mok/MOK.pem`.
+4. Sign every kernel image located in `"$ROOTFS/usr/lib/modules/"*/vmlinuz` and `"$ROOTFS/boot/vmlinuz-"*` using `sbsign --key keys/mok/MOK.priv --cert keys/mok/MOK.pem --output "$KERNEL.signed" "$KERNEL"` and replace `"$KERNEL"`.
+5. Create the helper script `"$ROOTFS/usr/bin/kepler-enroll-mok"` that runs `pkexec mokutil --import /usr/share/kepler-mok/MOK.der` so the user can enroll the public key into the UEFI NVRAM after installation.

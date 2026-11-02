@@ -1,0 +1,29 @@
+# PROMPT ID: 5.5 | TITLE: SBOM VERIFICATION, CVE SCANNING, SARIF UPLOAD, AND GITHUB RELEASES ATTACHMENT
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 05_CI_CD_VOYAGER_PPA_AND_FLATPAK_STE100.md
+
+ROLE: Linux Supply-Chain Security & GitHub Actions Release Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid YAML and Bash code blocks with strict 2-space YAML indentation. Do not include conversational prose.
+
+TASK:
+Update `.github/workflows/release-kepler-iso.yml` and `scripts/verify-release-sbom.sh` to run `make scan-cve`, validate and GPG-sign the SPDX 2.3, CycloneDX 1.5, and CVE report artifacts, upload `kepler-cve-trivy.sarif` to GitHub Code Scanning, and attach all artifacts to GitHub Releases.
+
+FILE 1: `scripts/verify-release-sbom.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Accept the build output directory as `$1` (`OUT_DIR="${1:-./build_out}"`).
+4. Locate the generated `*.spdx.json`, `*.cdx.json`, `kepler-cve-trivy.sarif`, `kepler-cve-trivy-report.txt`, and `kepler-cve-grype.json` files inside `"$OUT_DIR"`. Exit with code 1 if any file is missing or empty.
+5. Validate JSON syntax and mandatory top-level fields using `jq`:
+   - For `*.spdx.json`: Verify `.spdxVersion == "SPDX-2.3"` and `.packages | length > 0`.
+   - For `*.cdx.json`: Verify `.bomFormat == "CycloneDX"`, `.specVersion == "1.5"`, and `.components | length > 0`.
+   - For `kepler-cve-trivy.sarif`: Verify `.version == "2.1.0"` and `.runs | length > 0`.
+6. Append the SBOM and CVE report filenames and their SHA-256 digests to `"$OUT_DIR/SHA256SUMS"`.
+7. Create detached ASCII-armored GPG signatures (`*.spdx.json.asc`, `*.cdx.json.asc`, `kepler-cve-trivy.sarif.asc`, and `kepler-cve-grype.json.asc`) using `VOYAGER_GPG_KEY_ID` and verify them with `gpg --verify`.
+8. Print `"OK: SPDX 2.3, CycloneDX 1.5, and CVE vulnerability reports verified and signed."`
+
+FILE 2: Updated steps for `.github/workflows/release-kepler-iso.yml`
+1. Add `security-events: write` to the workflow `permissions` block (alongside `contents: write` and `packages: write`) so GitHub Actions can upload SARIF reports to GitHub Security Code Scanning.
+2. In Step 3 (Build OSTree Commit, SBOM, CVE Scan, and Live ISO), execute `make ostree-commit`, `make sbom`, `make scan-cve`, and `make iso`.
+3. In Step 4 (Verify and Sign Release Artifacts), execute `./scripts/verify-release-sbom.sh build_out` before signing `SHA256SUMS`.
+4. Add a dedicated step `Upload Trivy SARIF Report to GitHub Code Scanning` using `github/codeql-action/upload-sarif@v3` with `sarif_file: build_out/kepler-cve-trivy.sarif` and `category: kepler-os-immutable-sbom`.
+5. In Step 5 (Publish to GitHub Releases), attach `build_out/*.spdx.json`, `build_out/*.spdx.json.asc`, `build_out/*.cdx.json`, `build_out/*.cdx.json.asc`, `build_out/kepler-cve-trivy.sarif`, `build_out/kepler-cve-trivy-report.txt`, and `build_out/kepler-cve-grype.json` alongside the `.iso`, `.iso.asc`, `SHA256SUMS`, and `SHA256SUMS.gpg` files in `gh release create`.

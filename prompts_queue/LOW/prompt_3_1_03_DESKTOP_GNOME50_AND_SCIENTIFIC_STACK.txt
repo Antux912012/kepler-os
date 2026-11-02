@@ -1,0 +1,33 @@
+# PROMPT ID: 3.1 | TITLE: IMMUTABLE PACKAGE LISTS GENERATION
+# TARGET MODEL: Gemini 3.8 Flash [LOW] (Raw: LOW)
+# SOURCE MODULE: 03_DESKTOP_GNOME50_AND_SCIENTIFIC_STACK.md
+
+ROLE: Debian Immutable System Integrator.
+STANDARD: ASD-STE100. Output only the 3 requested files with exact package names (one package per line, comments starting with #).
+
+TASK:
+Create three package list files for the Kepler OS OSTree base image:
+
+FILE 1: `profile/config/package-lists/kepler-core.list.chroot`
+Include:
+- `ostree`, `ostree-boot`, `dracut`, `dracut-core`, `bubblewrap`, `fuse-overlayfs`
+- `live-boot`, `live-config`, `live-config-systemd`, `systemd-timesyncd`
+- `sudo`, `curl`, `wget`, `git`, `zram-tools`, `fwupd`, `ananicy-cpp`
+- `mesa-vulkan-drivers`, `intel-microcode`, `amd64-microcode`
+- `calamares`, `calamares-settings-debian`, `squashfs-tools`, `os-prober`, `cryptsetup`, `btrfs-progs`
+
+FILE 2: `profile/config/package-lists/kepler-gnome.list.chroot`
+Include:
+- `gnome-session`, `gnome-shell`, `gdm3`, `nautilus`, `gnome-control-center`
+- `gnome-text-editor`, `gnome-console`, `gnome-system-monitor`, `gnome-disk-utility`, `gnome-calculator`
+- `loupe`, `papers`, `flatpak`, `gnome-software`, `gnome-software-plugin-flatpak`
+- `network-manager-gnome`, `pipewire-audio`, `fonts-inter`, `fonts-jetbrains-mono`
+
+FILE 3: `profile/config/package-lists/kepler-science.list.chroot`
+Include:
+- `default-jre`, `openjdk-21-jre`, `cytoscape`
+- `python3-full`, `python3-pip`, `python3-venv`, `libopenblas0-pthread`
+- `python3-numpy`, `python3-scipy`, `python3-pandas`, `python3-polars`, `python3-biopython`
+- `python3-matplotlib`, `python3-seaborn`, `python3-scikit-learn`, `python3-ipykernel`
+- `r-base-core`
+- `podman`, `podman-compose`, `distrobox`, `buildah`, `slirp4netns`, `uidmap`

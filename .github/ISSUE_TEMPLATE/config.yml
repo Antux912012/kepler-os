@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability Report
+    url: https://github.com/Antux912012/kepler-os/security/advisories/new
+    about: Report potential security vulnerabilities privately under our CVD policy.

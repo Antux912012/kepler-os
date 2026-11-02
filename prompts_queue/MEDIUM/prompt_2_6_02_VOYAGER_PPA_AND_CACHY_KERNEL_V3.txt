@@ -1,0 +1,28 @@
+# PROMPT ID: 2.6 | TITLE: AUTOMATED TRIVY AND GRYPE SBOM CVE SCANNER
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 02_VOYAGER_PPA_AND_CACHY_KERNEL_V3.md
+
+ROLE: Linux Supply-Chain Security & Vulnerability Management Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts and Makefile snippets. Do not include conversational prose.
+
+TASK:
+Create an automated CVE vulnerability scanner script at `scripts/scan-kepler-sbom-cve.sh` that scans the generated SPDX 2.3 (`*.spdx.json`) and CycloneDX 1.5 (`*.cdx.json`) SBOM files using Trivy and Grype, and add a `Makefile` target to execute it.
+
+FILE 1: `scripts/scan-kepler-sbom-cve.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Accept the build output directory as `$1` (`OUT_DIR="${1:-/workspace/build_out}"`).
+4. Locate the latest `*.spdx.json` and `*.cdx.json` SBOM files inside `"$OUT_DIR"`. Exit with code 1 if neither file exists.
+5. Verify that `trivy` or `grype` is installed inside the container (install the official binary into `/usr/local/bin` if missing).
+6. Execute **Trivy SBOM Scan** (`trivy sbom`):
+   - Scan the CycloneDX SBOM (`"$CDX_FILE"`) for `CRITICAL` and `HIGH` vulnerabilities (`--severity CRITICAL,HIGH`).
+   - Output a SARIF report (`"$OUT_DIR/kepler-cve-trivy.sarif"`) for GitHub Security Code Scanning integration and a human-readable summary table (`"$OUT_DIR/kepler-cve-trivy-report.txt"`).
+7. Execute **Grype SBOM Scan** (`grype sbom:`):
+   - Scan the SPDX SBOM (`"sbom:$SPDX_FILE"`) with `--only-fixed` to identify actionable upstream Debian Testing or kernel security patches.
+   - Output a JSON vulnerability report (`"$OUT_DIR/kepler-cve-grype.json"`).
+8. Enforce a configurable security gate (`FAIL_ON_CRITICAL="${FAIL_ON_CRITICAL:-1}"`):
+   - If `FAIL_ON_CRITICAL=1` and fixable `CRITICAL` vulnerabilities are detected (`--ignore-unfixed --severity CRITICAL --exit-code 1`), print an ASD-STE100 error message instructing the maintainer to rebuild the affected package in `Voyager-PPA` or pull the latest Debian Testing snapshot, and exit with code 1.
+9. Append the generated CVE report files to `"$OUT_DIR/SHA256SUMS"` and print `"OK: SBOM CVE vulnerability scan completed."`
+
+FILE 2: `Makefile` target snippet (`scan-cve`)
+1. Add target `scan-cve` depending on `sbom` that executes `/workspace/scripts/scan-kepler-sbom-cve.sh` inside the builder container.

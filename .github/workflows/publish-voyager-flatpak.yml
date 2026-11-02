@@ -1,0 +1,46 @@
+name: Publish Voyager Flatpaks
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'flatpaks/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  build-flatpaks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Flatpak Builder
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder ostree
+
+      - name: Add Flathub Remote
+        run: |
+          flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      - name: Build Flatpaks
+        run: |
+          mkdir -p build_flatpak_repo
+          echo "Building local Flatpak manifests..."
+          # Builds will iterate through flatpaks/ directory if manifests are present
+          if [ -d "flatpaks" ]; then
+            for manifest in flatpaks/*.yml flatpaks/*.yaml; do
+              [ -e "$manifest" ] || continue
+              flatpak-builder --repo=build_flatpak_repo --force-clean build-dir "$manifest"
+            done
+          fi
+
+      - name: Upload Flatpak Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: voyager-flatpak-repo
+          path: build_flatpak_repo/

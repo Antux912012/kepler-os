@@ -1,0 +1,54 @@
+name: Publish Voyager PPA, OSTree, and OCI Bootc
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'ostree-recipe/**'
+      - 'profile/**'
+      - 'scripts/**'
+      - 'Containerfile'
+      - 'Makefile'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Podman
+        run: sudo apt-get update && sudo apt-get install -y podman
+
+      - name: Build Isolated Container Builder
+        run: make builder
+
+      - name: Generate MOK Keys
+        run: make mok-keys
+
+      - name: Compose OSTree Commit
+        run: make ostree-commit
+
+      - name: Generate SBOM Manifests
+        run: make sbom
+
+      - name: Scan SBOM for CVEs
+        run: make scan-cve
+
+      - name: Encapsulate and Push OCI Bootc Container
+        env:
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          make oci-bootc
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kepler-ostree-build-artifacts
+          path: build_out/

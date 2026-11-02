@@ -1,0 +1,30 @@
+# PROMPT ID: 4.4 | TITLE: LUKS2 TPM2 AUTO-UNLOCK CONFIGURATION FOR CALAMARES AND OSTREE
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 04_CALAMARES_INSTALLER_AND_SYSCTL.md
+
+ROLE: Linux Disk Encryption, TPM2 & Immutable Initramfs Security Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid YAML, Bash, and configuration code blocks. Ensure strict 2-space YAML indentation. Do not include conversational prose.
+
+TASK:
+Configure LUKS2 full-disk encryption with TPM2 auto-unlock (`systemd-cryptenroll`) and recovery key generation for Kepler OS Immutable.
+
+FILE 1: `ostree-recipe/overlays/etc/dracut.conf.d/30-kepler-tpm2-luks.conf`
+1. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Set `add_dracutmodules+=" crypt systemd-cryptsetup tpm2-tss "` so the OSTree `dracut` initramfs can unlock LUKS2 volumes via hardware TPM 2.0 at boot.
+
+FILE 2: `profile/config/includes.chroot/etc/calamares/modules/luksbootkeyfile.conf`
+1. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Configure `luks2Hash: pbkdf2` (or `argon2id` with tuned memory for fast GRUB/systemd-cryptsetup unlock).
+
+FILE 3: `ostree-recipe/overlays/usr/bin/kepler-enroll-tpm2`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Verify that `/dev/tpmrm0` exists and that `systemd-cryptenroll --tpm2-device=list` detects a valid TPM 2.0 chip. Exit with a clear `zenity --error` or CLI message if no TPM 2.0 device is present.
+4. Automatically detect the underlying LUKS2 block device backing the OSTree root (`/sysroot`) using `cryptsetup status` or `lsblk -no PKNAME,FSTYPE`.
+5. Generate a high-entropy 8-group recovery key via `systemd-cryptenroll --recovery-key "$LUKS_DEV"` and instruct the user to save it before binding TPM2.
+6. Enroll the TPM 2.0 chip bound to **PCR 7** (UEFI Secure Boot state) and **PCR 14** (MOK certificate state) with PIN fallback support:
+   `pkexec systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7+14 "$LUKS_DEV"`
+7. Update `/etc/crypttab` with `tpm2-device=auto,discard` so `systemd-cryptsetup` unlocks the Btrfs/OSTree volume automatically on every subsequent boot unless the Secure Boot or MOK state is tampered with.
+
+FILE 4: Update instruction for `welcome-app/src/main.rs` (Page 2 "Hardware & Secure Boot Setup")
+1. Add a button `"Bind LUKS2 Encryption to TPM 2.0 (Auto-Unlock)"` on Page 2 of `kepler-welcome` that launches `/usr/bin/kepler-enroll-tpm2` after MOK key enrollment.

@@ -1,0 +1,26 @@
+# PROMPT ID: 3.4 | TITLE: R2U BINARY CRAN/BIOCONDUCTOR SETUP FOR DISTROBOX
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 03_DESKTOP_GNOME50_AND_SCIENTIFIC_STACK.md
+
+ROLE: Bioinformatics R & Debian Container Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash and R configuration blocks. Do not include conversational prose.
+
+TASK:
+Configure pre-compiled binary CRAN and Bioconductor package installation (`r2u` / `bspm`) inside the mutable `kepler-science-box` Distrobox container so `install.packages()` and `BiocManager::install()` resolve dependencies via `apt` in seconds.
+
+FILE 1: `ostree-recipe/overlays/usr/share/kepler-science/setup-r2u-bioc.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Install prerequisite packages inside the container: `curl`, `gnupg`, `ca-certificates`, `python3-dbus`, `python3-gi`, `python3-apt`, `r-cran-bspm`, `r-cran-biocmanager`.
+4. Import the `r2u` / Eddelbuettel GPG signing key into `/usr/share/keyrings/r2u-cran.gpg` and configure `/etc/apt/sources.list.d/r2u-cran.list` (with fallback to Posit Public Package Manager binary linux wheels if a package is not in `r2u`).
+5. Configure `/etc/apt/preferences.d/99-r2u-pinning` with `Pin-Priority: 700` for `r-cran-*` and `r-bioc-*` binary packages.
+6. Enable passwordless `apt` execution for `bspm` inside the rootless Distrobox container via `/etc/sudoers.d/90-kepler-bspm`.
+
+FILE 2: `ostree-recipe/overlays/usr/share/kepler-science/Rprofile.site`
+1. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Enable `bspm::enable()` silently on R startup (`suppressMessages(bspm::enable())`) so calls to `install.packages()` inside *Imladris* or the R console automatically install pre-compiled `.deb` binaries.
+3. Set `options(Ncpus = parallel::detectCores())` and configure OpenBLAS multi-threading (`Sys.setenv(OPENBLAS_NUM_THREADS = parallel::detectCores())`).
+4. Copy `Rprofile.site` to `/etc/R/Rprofile.site` inside `setup-r2u-bioc.sh`.
+
+FILE 3: Update instruction for `ostree-recipe/overlays/etc/distrobox/distrobox.ini`
+1. Add `init_hooks="/usr/share/kepler-science/setup-r2u-bioc.sh"` under `[kepler-science-box]` so the binary R/Bioconductor environment is configured automatically when the container is first assembled.

@@ -1,0 +1,29 @@
+# PROMPT ID: 7.2 | TITLE: GTK4 LIBADWAITA FRONTEND WITH OSTREE ATOMIC CONTROLS
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 07_KEPLER_TUNER_APP_STE100.md
+
+ROLE: Rust GTK4 & Libadwaita Desktop Architect.
+STANDARD: ASD-STE100. Output only valid Rust and CSS code blocks.
+
+TASK:
+Create the `kepler-tuner-gui` desktop application using `gtk4` and `libadwaita` (`adw`).
+
+FILE 1: `gui/Cargo.toml`
+1. Declare dependencies: `gtk = { version = "0.9", package = "gtk4", features = ["v4_14"] }`, `adw = { version = "0.7", package = "libadwaita", features = ["v1_5"] }`, `zbus = "4"`, `tokio = { version = "1", features = ["rt-multi-thread"] }`.
+
+FILE 2: `gui/resources/nord-style.css`
+1. Define Libadwaita CSS variables using the Nord Palette (`#2E3440`, `#3B4252`, `#434C5E`, `#88C0D0`, `#81A1C1`, `#A3BE8C`, `#EBCB8B`, `#BF616A`).
+
+FILE 3: `gui/src/main.rs`
+1. Initialize `adw::Application` with application ID `org.voyager.KeplerTuner`.
+2. Load `nord-style.css` using `gtk::CssProvider`.
+3. Build an `adw::ApplicationWindow` containing an `adw::ToolbarView`, an `adw::HeaderBar`, and an `adw::ViewStack` with four pages:
+   - Page 1 ("Workload Presets"): Radio buttons for `"Silent / Mobile"`, `"Balanced Desktop"`, and `"Scientific / Bioinformatics Compute"` connected to `ApplyWorkloadPreset`.
+   - Page 2 ("Kernel & Scheduler"): `adw::ComboRow` for `BORE (Default)`, `scx_lavd`, `scx_bpfland`, and `scx_rusty` (`SetSchedExtProfile`), plus an `adw::SwitchRow` for Transparent HugePages (`THP`).
+   - Page 3 ("CPU & NVMe Power"): `adw::ComboRow` for CPU Governor and `intel_pstate` / `amd_pstate` EPP (`SetCpuProfile`), and an `adw::SwitchRow` for NVMe Deep Power State (`PS4 / APST`).
+   - Page 4 ("Atomic OS & Science Box"):
+     * Display the active OSTree commit hash and branch via `GetOstreeStatus`.
+     * Provide an `"Update Atomic Image (Voyager-OSTree)"` button connected to `TriggerOstreeUpgrade`.
+     * Provide a `"Rollback to Previous Atomic Deployment"` button connected to `TriggerOstreeRollback`.
+     * Provide a `"Launch Kepler Science Distrobox"` button that spawns `gnome-console -- kepler-science-shell`.
+4. Display an `adw::Toast` inside an `adw::ToastOverlay` whenever an operation succeeds or fails.

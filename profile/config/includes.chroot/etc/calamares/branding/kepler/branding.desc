@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+componentName: kepler
+
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 850px,580px
+windowPlacement: center
+
+sidebar: widget
+navigation: widget
+
+strings:
+  productName: "Kepler OS Immutable"
+  shortProductName: "Kepler"
+  version: "Atomic Rolling (Testing x86-64-v3)"
+  shortVersion: "x86-64-v3-ostree"
+  versionedName: "Kepler OS Atomic Rolling"
+  shortVersionedName: "Kepler OS"
+  bootloaderEntryName: "Kepler OS"
+  productUrl: "https://voyager-project.org"
+  supportUrl: "https://github.com/Antux912012/kepler-os/issues"
+  knownIssuesUrl: "https://github.com/Antux912012/kepler-os/wiki"
+  releaseNotesUrl: "https://github.com/Antux912012/kepler-os/releases"
+
+images:
+  productLogo: "squid.png"
+  productIcon: "squid.png"
+  productWelcome: "languages.png"
+
+slideshow:
+  - "slide1.qml"
+
+style:
+  SidebarBackground: "#2E3440"
+  SidebarText: "#ECEFF4"
+  SidebarTextSelect: "#88C0D0"
+  SidebarTextHighlight: "#81A1C1"

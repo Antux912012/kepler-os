@@ -1,0 +1,29 @@
+# PROMPT ID: 6.5 | TITLE: QEMU/KVM SWTPM LUKS2 AUTO-UNLOCK TEST SCRIPT
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 06_QEMU_KVM_TESTING_AND_SECURE_BOOT_STE100.md
+
+ROLE: Linux Virtualization, TPM 2.0 & Cryptography QA Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts. Do not include conversational prose.
+
+TASK:
+Create a host-side QEMU/KVM test script at `scripts/test-tpm2-luks-qemu.sh` and a guest-side verification script at `ostree-recipe/overlays/usr/bin/kepler-verify-tpm2-luks` to test LUKS2 full-disk encryption auto-unlock using an emulated `swtpm` (Software TPM 2.0) device.
+
+FILE 1: `scripts/test-tpm2-luks-qemu.sh` (Host-side QEMU + swtpm runner)
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Verify that `swtpm` and `qemu-system-x86_64` are installed.
+4. Create state directory `build_out/swtpm-state` and start `swtpm socket --tpm2 --tpmstate dir=build_out/swtpm-state --ctrl type=unixio,path=build_out/swtpm-sock --daemon`.
+5. Register a `trap` on `EXIT` to terminate the background `swtpm` daemon cleanly.
+6. Launch `qemu-system-x86_64` with:
+   - CPU model: `-cpu Haswell-v4,+avx2,+bmi1,+bmi2,+fma,+movbe,+lzcnt -smp 4 -m 4096M -enable-kvm`
+   - UEFI Secure Boot OVMF pflash drives (`OVMF_CODE_4M.secboot.fd` and `OVMF_VARS.test.fd`).
+   - Emulated TPM 2.0 CRB device attached to the `swtpm` socket:
+     `-chardev socket,id=chrtpm,path=build_out/swtpm-sock -tpmdev emulator,id=tpm0,chardev=chrtpm -device tpm-crb,tpmdev=tpm0`
+   - Virtual NVMe drive (`build_out/test-nvme.qcow2`) and SSH port forwarding (`hostfwd=tcp::2222-:22`).
+7. Accept an optional flag `--tamper-secureboot` (boots with Secure Boot disabled in `OVMF_VARS`) to test the negative case and confirm that PCR 7 mismatch blocks automatic TPM2 unlocking and falls back to the recovery passphrase prompt.
+
+FILE 2: `ostree-recipe/overlays/usr/bin/kepler-verify-tpm2-luks` (Guest-side verifier)
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Verify that `/dev/tpmrm0` is present and `systemd-cryptenroll --tpm2-device=list` reports the `swtpm` TPM 2.0 device.
+4. Run `/usr/bin/kepler-enroll-tpm2` in non-interactive test mode to bind the LUKS2 root device to PCR 7 + PCR 14, verify with `cryptsetup luksDump` that a `systemd-tpm2` token slot exists, and print "OK: TPM 2.0 LUKS2 PCR 7+14 enrollment verified."

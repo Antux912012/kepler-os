@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+[Plymouth Theme]
+Name=Kepler OS Nord
+Description=Kepler OS Immutable Boot Splash (Nord Palette)
+ModuleName=two-step
+
+[two-step]
+Font=Inter 12
+TitleFont=Inter Bold 16
+ImageDir=/usr/share/plymouth/themes/kepler-nord
+HorizontalAlignment=.5
+VerticalAlignment=.5
+BackgroundStartColor=0x2E3440
+BackgroundEndColor=0x2E3440
+ProgressBarBackgroundColor=0x3B4252
+ProgressBarForegroundColor=0x88C0D0

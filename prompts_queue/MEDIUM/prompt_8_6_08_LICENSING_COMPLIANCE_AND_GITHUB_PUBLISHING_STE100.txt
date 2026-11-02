@@ -1,0 +1,53 @@
+# PROMPT ID: 8.6 | TITLE: GITHUB ISSUE AND PULL REQUEST TEMPLATES
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: LOW / MEDIUM)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Open-Source DevOps & Governance Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid YAML and Markdown files. Ensure strict 2-space YAML indentation for GitHub Issue Forms.
+
+TASK:
+Create the GitHub Issue Templates and Pull Request Template for the Kepler OS repository.
+
+FILE 1: `.github/ISSUE_TEMPLATE/config.yml`
+1. Set `blank_issues_enabled: false`.
+2. Add a `contact_links` entry for **"Security Vulnerability Report"** pointing to `https://github.com/Antux912012/kepler-os/security/advisories/new` with description: `"Report security vulnerabilities privately in accordance with SECURITY.md. Do not open public issues for security bugs."`
+
+FILE 2: `.github/ISSUE_TEMPLATE/bug_report.yml`
+Create a GitHub Issue Form in YAML with:
+- `name: "Bug Report (Kepler OS / Voyager-PPA / Kepler Tuner)"`
+- `description: "Report a reproducible defect in the ISO build, kernel, installer, or scientific stack."`
+- `labels: ["bug", "triage"]`
+- `body` fields:
+  1. `dropdown` (`id: component`): Options `ISO Live-Build Pipeline`, `Kernel (linux-cachyos-bore-v3)`, `Calamares Installer`, `Kepler Tuner (kepler-tuner / kepler-tuned)`, `Scientific Stack (Cytoscape / Python / R / Podman)`, `Voyager-PPA / Voyager-Flatpak`.
+  2. `input` (`id: cpu_model`): Label `"CPU Model & x86-64-v3 Support"`, placeholder `"e.g., Intel Core i7-7820HQ (AVX2 enabled)"`.
+  3. `textarea` (`id: reproduce`): Label `"Steps to Reproduce (ASD-STE100 Imperative Steps)"`.
+  4. `textarea` (`id: logs`): Label `"Relevant Logs (journalctl, dmesg, or build-iso.sh output)"`, `render: shell`.
+  5. `checkboxes` (`id: compliance`):
+     - `"I verified that my CPU supports the x86-64-v3 microarchitecture (Intel 4th Gen Haswell+ / AMD Excavator+)."` (`required: true`)
+     - `"I wrote this bug report using clear, concise technical English (ASD-STE100)."` (`required: true`)
+
+FILE 3: `.github/ISSUE_TEMPLATE/feature_request.yml`
+Create a GitHub Issue Form in YAML with:
+- `name: "Feature or Package Request"`
+- `description: "Propose a new feature, kernel tuning preset, or scientific package for Kepler OS."`
+- `labels: ["enhancement"]`
+- `body` fields:
+  1. `dropdown` (`id: target_repo`): Options `Kepler OS Base ISO`, `Voyager-PPA (.deb)`, `Voyager-Flatpak (Arda-Tech)`, `Kepler Tuner App`.
+  2. `textarea` (`id: specification`): Label `"Technical Specification (ASD-STE100)"`.
+  3. `checkboxes` (`id: license_check`):
+     - `"This proposal is compatible with the GNU General Public License v3.0 (GPL-3.0-or-later)."` (`required: true`)
+
+FILE 4: `.github/pull_request_template.md`
+Write a structured Markdown Pull Request template in strict ASD-STE100 containing:
+1. `## 1. SUMMARY OF CHANGES (ASD-STE100)` (Instruction: Write one sentence per change using imperative verbs: *Add*, *Fix*, *Update*, *Remove*).
+2. `## 2. AFFECTED MODULE`: Checkboxes for `01 Container & Build Pipeline`, `02 Voyager-PPA & CachyOS Kernel v3`, `03 GNOME 50+ & Scientific Stack`, `04 Calamares & Sysctl`, `05 CI/CD Pipelines`, `06 QEMU/KVM & Secure Boot MOK`, `07 Kepler Tuner (Rust/GTK4)`, `08 Documentation & Wiki`.
+3. `## 3. MANDATORY COMPLIANCE CHECKLIST` with the following checkboxes:
+   - `- [ ] **DCO 1.1 Sign-Off:** Every commit in this Pull Request includes a valid Signed-off-by: trailer (git commit -s).`
+   - `- [ ] **GPLv3 License Compliance:** All new source files and scripts include the SPDX-License-Identifier: GPL-3.0-or-later header.`
+   - `- [ ] **ASD-STE100 Standard:** All documentation, Wiki updates, code comments, and commit messages obey the ASD-STE100 (Simplified Technical English) rules.`
+   - `- [ ] **EU AI Act Transparency Disclosure (Regulation EU 2024/1689, Article 50):** I have disclosed below whether AI / LLM tools assisted in generating this Pull Request.`
+   - `- [ ] **Container & QEMU Verification:** I tested these changes inside the isolated builder container (make builder && make iso) and verified boot in QEMU/KVM (make test-iso).`
+4. `## 4. EU AI ACT DISCLOSURE METADATA`
+   - `- **AI-Assisted Contribution:** [Yes / No]`
+   - `- **AI Model Used (if applicable):** [e.g., Gemini 3.8 Flash Low / Medium / High, or N/A]`
+   - `- **Human Verification Statement:** I confirm that a human maintainer reviewed, tested, and validated all AI-generated code and configurations in this Pull Request.`

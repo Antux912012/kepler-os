@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Kepler Science R Environment Initialization
+
+# Enable binary package management silently
+if (requireNamespace("bspm", quietly = TRUE)) {
+    suppressMessages(bspm::enable())
+}
+
+# Auto-detect cores for parallel compilation and BLAS
+local({
+    n_cores <- parallel::detectCores()
+    options(Ncpus = n_cores)
+    Sys.setenv(OPENBLAS_NUM_THREADS = as.character(n_cores))
+})

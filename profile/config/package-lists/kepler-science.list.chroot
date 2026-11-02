@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Kepler Scientific & Container Layer
+default-jre
+openjdk-21-jre
+# cytoscape (Java application)
+python3-full
+python3-pip
+python3-venv
+libopenblas0-pthread
+python3-numpy
+python3-scipy
+python3-pandas
+# python3-polars (available in mutable kepler-science-box)
+python3-biopython
+python3-matplotlib
+python3-seaborn
+python3-sklearn
+python3-ipykernel
+r-base-core
+podman
+podman-compose
+distrobox
+buildah
+slirp4netns
+uidmap

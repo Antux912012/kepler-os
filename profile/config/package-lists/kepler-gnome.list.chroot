@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Kepler GNOME Minimal Wayland Session
+gnome-session
+gnome-shell
+gdm3
+nautilus
+gnome-control-center
+gnome-text-editor
+gnome-console
+gnome-system-monitor
+gnome-disk-utility
+gnome-calculator
+loupe
+papers
+flatpak
+gnome-software
+gnome-software-plugin-flatpak
+network-manager-applet
+pipewire-audio
+fonts-inter
+fonts-jetbrains-mono

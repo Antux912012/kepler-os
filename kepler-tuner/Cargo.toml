@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "daemon",
+    "gui"
+]
+resolver = "2"
+
+[workspace.dependencies]
+zbus = "4"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+anyhow = "1"

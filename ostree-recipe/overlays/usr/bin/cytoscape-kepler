@@ -1,0 +1,16 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+TOTAL_MEM_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+# 70% of total RAM in Megabytes
+MAX_HEAP_MB=$(( TOTAL_MEM_KB * 70 / 100 / 1024 ))
+
+# Cap minimum at 1024MB
+if [ "$MAX_HEAP_MB" -lt 1024 ]; then
+    MAX_HEAP_MB=1024
+fi
+
+export JAVA_TOOL_OPTIONS="-Xmx${MAX_HEAP_MB}m -XX:+UseG1GC -XX:+ParallelRefProcEnabled -Dsun.java2d.opengl=true"
+echo "Starting Cytoscape with dynamic heap: ${MAX_HEAP_MB} MB..."
+exec /usr/bin/cytoscape "$@"

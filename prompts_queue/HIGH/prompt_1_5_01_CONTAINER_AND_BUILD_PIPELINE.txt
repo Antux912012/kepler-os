@@ -1,0 +1,33 @@
+# PROMPT ID: 1.5 | TITLE: BTRFS SUBVOLUME AND SNAPSHOT LAYOUT CONFIGURATION
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 01_CONTAINER_AND_BUILD_PIPELINE.md
+
+ROLE: Linux Filesystem & Immutable OSTree Storage Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid YAML and Bash code blocks. Ensure strict 2-space YAML indentation. Do not include conversational prose.
+
+TASK:
+Create the Btrfs subvolume layout configuration for Calamares and the `/var` snapshot management helper for Kepler OS Immutable.
+
+FILE 1: `profile/config/includes.chroot/etc/calamares/modules/partition.conf`
+1. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Set `efiSystemPartition: "/boot/efi"`, `efiSystemPartitionSize: 512M`, and `defaultFileSystemType: "btrfs"`.
+3. Define `btrfsSubvolumes` with compression `compress=zstd:1,noatime` to isolate stateful `/var` directories from OSTree root rollbacks:
+   - `mountPoint: /` -> `subvolume: /@ostree`
+   - `mountPoint: /var` -> `subvolume: /@var`
+   - `mountPoint: /var/home` -> `subvolume: /@var_home`
+   - `mountPoint: /var/log` -> `subvolume: /@var_log`
+   - `mountPoint: /var/lib/containers` -> `subvolume: /@var_containers`
+   - `mountPoint: /.snapshots` -> `subvolume: /@snapshots`
+
+FILE 2: `profile/config/includes.chroot/etc/calamares/modules/mount.conf`
+1. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Configure `btrfsSwapSubvol: /@swap`.
+3. Specify `extraMounts` and `btrfs` mount options: `defaults,noatime,compress=zstd:1,space_cache=v2,ssd,discard=async`.
+4. Ensure `/var/lib/containers` is mounted with `nodatacow` disabled (standard CoW enabled for `btrfs` container storage driver compatibility) and decoupled from `/@var` snapshots.
+
+FILE 3: `ostree-recipe/overlays/usr/bin/kepler-var-snapshot`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Accept subcommands `create [label]`, `list`, and `restore <snapshot_name>`.
+4. On `create`: Create read-only Btrfs snapshots of `/var` (`/@var`) and `/var/home` (`/@var_home`) inside `/.snapshots/kepler-var-$(date -u +%Y%m%d-%H%M%S)-${LABEL}` using `btrfs subvolume snapshot -r`.
+5. Automatically prune `/var` snapshots older than the 10 most recent snapshots to conserve NVMe disk space.

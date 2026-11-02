@@ -1,0 +1,46 @@
+# PROMPT ID: 4.3 | TITLE: PLYMOUTH BOOT SPLASH AND GDM3 NORD DEFAULTS
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 04_CALAMARES_INSTALLER_AND_SYSCTL.md
+
+ROLE: Linux Desktop Branding & Display Manager Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only the requested configuration files and setup scripts. Do not include conversational prose.
+
+TASK:
+Create the Plymouth boot splash theme (`kepler-nord`) and the GDM3 login screen defaults inside `ostree-recipe/overlays/` so they are baked into the immutable OSTree commit and `dracut` initramfs.
+
+FILE 1: `ostree-recipe/overlays/usr/share/plymouth/themes/kepler-nord/kepler-nord.plymouth`
+1. Set `[Plymouth Theme]` with `Name=Kepler OS Nord`, `Description=Kepler OS Immutable Boot Splash (Nord Palette)`, and `ModuleName=two-step`.
+2. Set `[two-step]` with:
+   - `Font=Inter 12`
+   - `TitleFont=Inter Bold 16`
+   - `ImageDir=/usr/share/plymouth/themes/kepler-nord`
+   - `HorizontalAlignment=.5`
+   - `VerticalAlignment=.5`
+   - `BackgroundStartColor=0x2E3440`
+   - `BackgroundEndColor=0x2E3440`
+   - `ProgressBarBackgroundColor=0x3B4252`
+   - `ProgressBarForegroundColor=0x88C0D0`
+
+FILE 2: `ostree-recipe/overlays/etc/plymouth/plymouthd.conf`
+1. Set `[Daemon]` with `Theme=kepler-nord` and `ShowDelay=0`.
+
+FILE 3: `ostree-recipe/overlays/etc/dracut.conf.d/20-kepler-plymouth.conf`
+1. Set `add_dracutmodules+=" plymouth "` so the `kepler-nord` boot splash is embedded inside `/usr/lib/modules/${KVER}/initramfs.img`.
+
+FILE 4: `ostree-recipe/overlays/etc/dconf/db/gdm.d/00-kepler-gdm-nord`
+1. Configure `[org/gnome/desktop/interface]`:
+   - `color-scheme='prefer-dark'`
+   - `gtk-theme='Adwaita-dark'`
+   - `font-name='Inter 11'`
+   - `cursor-theme='Adwaita'`
+2. Configure `[org/gnome/desktop/background]`:
+   - `primary-color='#2E3440'`
+   - `secondary-color='#3B4252'`
+   - `color-shading-type='solid'`
+3. Configure `[org/gnome/login-screen]`:
+   - `disable-user-list=false`
+   - `logo='/usr/share/pixmaps/kepler-os-logo.svg'`
+
+FILE 5: `ostree-recipe/overlays/etc/dconf/profile/gdm`
+1. Define `user-db:user` on line 1, `system-db:gdm` on line 2, and `file-db:/usr/share/gdm/greeter-dconf-defaults` on line 3.
+2. Provide the chroot hook instruction (`plymouth-set-default-theme kepler-nord && dconf update`) to add to `0500-kepler-ostree-setup.hook.chroot`.

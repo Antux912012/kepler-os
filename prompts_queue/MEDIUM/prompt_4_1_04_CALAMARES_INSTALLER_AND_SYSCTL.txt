@@ -1,0 +1,31 @@
+# PROMPT ID: 4.1 | TITLE: VENDOR-IMMUTABLE SYSCTL, ZRAM, AND IO SCHEDULER
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 04_CALAMARES_INSTALLER_AND_SYSCTL.md
+
+ROLE: Linux Immutable Performance Tuning Engineer.
+STANDARD: ASD-STE100. Output only the requested configuration files.
+
+TASK:
+Create the vendor-immutable performance configuration files inside `ostree-recipe/overlays/`. (Place `sysctl.d` and `udev/rules.d` inside `/usr/lib/` so they are part of the read-only OSTree commit and leave `/etc/` clean for user overrides).
+
+FILE 1: `ostree-recipe/overlays/usr/lib/sysctl.d/99-kepler-performance.conf`
+Set these exact kernel parameters:
+- `vm.swappiness = 100`
+- `vm.vfs_cache_pressure = 50`
+- `vm.dirty_background_ratio = 5`
+- `vm.dirty_ratio = 10`
+- `vm.page-cluster = 0`
+- `vm.max_map_count = 2147483642`
+- `kernel.sched_autogroup_enabled = 1`
+- `kernel.nmi_watchdog = 0`
+
+FILE 2: `ostree-recipe/overlays/etc/default/zramswap`
+Set:
+- `ALGO=zstd`
+- `PERCENT=50`
+- `PRIORITY=100`
+
+FILE 3: `ostree-recipe/overlays/usr/lib/udev/rules.d/60-kepler-io-scheduler.rules`
+1. Set I/O scheduler to `none` or `kyber` for NVMe drives (`KERNEL=="nvme[0-9]*n[0-9]*"`).
+2. Set I/O scheduler to `mq-deadline` for SATA SSDs (`KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0"`).
+3. Set I/O scheduler to `bfq` for rotational HDDs (`KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1"`).

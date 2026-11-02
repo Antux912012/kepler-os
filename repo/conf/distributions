@@ -1,0 +1,7 @@
+Origin: ppa.voyager-project.org
+Label: Voyager-PPA
+Codename: testing
+Architectures: amd64
+Components: main
+Description: Voyager-PPA Official APT repository for Kepler OS
+SignWith: yes

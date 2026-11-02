@@ -1,0 +1,29 @@
+# PROMPT ID: 2.1 | TITLE: VOYAGER-OSTREE, VOYAGER-PPA, AND FLATPAK INTEGRATION
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 02_VOYAGER_PPA_AND_CACHY_KERNEL_V3.md
+
+ROLE: Debian OSTree Repository & Security Architect.
+STANDARD: ASD-STE100. Output only valid configuration files. Do not include prose outside code blocks.
+
+TASK:
+Create the repository integration files for Kepler OS Immutable inside the `profile/config/` and `ostree-recipe/` trees.
+
+FILE 1: `ostree-recipe/overlays/etc/ostree/remotes.d/voyager-ostree.conf`
+1. Define the `[remote "voyager-ostree"]` section.
+2. Set `url=https://ostree.voyager-project.org/repo`.
+3. Set `branches=kepler/testing/x86_64-v3/gnome;`.
+4. Set `gpg-verify=true` and `gpgkeypath=/usr/share/keyrings/voyager-ostree.gpg`.
+
+FILE 2: `profile/config/archives/voyager-ppa.list.chroot`
+1. Configure the APT source line for `https://ppa.voyager-project.org/debian` targeting suite `testing` and component `main` (used at image build time and inside Distrobox containers).
+2. Add the option `[signed-by=/usr/share/keyrings/voyager-ppa.key.gpg]`.
+
+FILE 3: `profile/config/archives/voyager-ppa.pref.chroot`
+1. Configure APT Pinning so all packages (`Package: *`) from `Origin "ppa.voyager-project.org"` receive `Pin-Priority: 1001`.
+
+FILE 4: `profile/config/hooks/normal/0500-kepler-ostree-setup.hook.chroot`
+1. Use `#!/bin/bash` and `set -e`.
+2. Register `flathub` (`https://dl.flathub.org/repo/flathub.flatpakrepo`) and `voyager-flatpak` (`https://flatpak.voyager-project.org/voyager.flatpakrepo`) system-wide in `/var/lib/flatpak`.
+3. Enable systemd services: `ostree-remount.service`, `zramswap.service`, `NetworkManager.service`, `gdm3.service`.
+4. Configure `/etc/dracut.conf.d/10-kepler-ostree.conf` with `add_dracutmodules+=" ostree "` and `compress="zstd"`.
+5. Purge bloatware games (`gnome-games`, `gnome-2048`, `aisleriot`, `gnome-mahjongg`, `gnome-mines`, `gnome-sudoku`, `tali`) and run `apt-get autoremove -y`.

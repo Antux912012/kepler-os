@@ -1,0 +1,25 @@
+# PROMPT ID: 7.5 | TITLE: KEPLER-VAR-SNAPSHOT BTRFS D-BUS AND GTK4 GUI INTEGRATION
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 07_KEPLER_TUNER_APP_STE100.md
+
+ROLE: Senior Rust GTK4, Libadwaita & Btrfs Storage Systems Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid Rust code blocks. Do not include conversational prose.
+
+TASK:
+Extend the `kepler-tuned` D-Bus daemon (`daemon/src/main.rs`) and the `kepler-tuner-gui` GTK4 frontend (`gui/src/main.rs`) to integrate `/usr/bin/kepler-var-snapshot` on Page 4 ("Atomic OS & Science Box").
+
+FILE 1: `daemon/src/btrfs_snapshots.rs` (and integration into `org.voyager.KeplerTuned1`)
+1. Include `// SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Add three new D-Bus methods to the `org.voyager.KeplerTuned1` interface in `kepler-tuned`:
+   - `ListVarSnapshots() -> zbus::fdo::Result<Vec<String>>`: Execute `/usr/bin/kepler-var-snapshot list` and return the list of existing read-only Btrfs snapshots in `/.snapshots/`.
+   - `CreateVarSnapshot(label: &str) -> zbus::fdo::Result<String>`: Validate that `label` contains only alphanumeric characters, dashes, or underscores (`^[a-zA-Z0-9_-]+$`), execute `/usr/bin/kepler-var-snapshot create "<label>"`, and return the created snapshot path.
+   - `RestoreVarSnapshot(snapshot_name: &str) -> zbus::fdo::Result<String>`: Validate `snapshot_name`, execute `/usr/bin/kepler-var-snapshot restore "<snapshot_name>"`, and return a status message instructing the user to reboot.
+
+FILE 2: `gui/src/snapshots_page.rs` (and integration into Page 4 of `gui/src/main.rs`)
+1. Include `// SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. On Page 4 ("Atomic OS & Science Box"), add an `adw::PreferencesGroup` titled `"Stateful /var & /var/home Btrfs Snapshots"`:
+   - Add an `adw::EntryRow` labeled `"Snapshot Label (e.g., pre-upgrade)"` with a `"Create /var Snapshot"` suffix button connected to `CreateVarSnapshot`.
+   - Add an `adw::ComboRow` (or dynamic list of `adw::ActionRow` items) populated by `ListVarSnapshots`.
+   - Provide a `"Restore Selected /var Snapshot"` button (`destructive-action` CSS class) that opens an `adw::AlertDialog` confirming the restore before calling `RestoreVarSnapshot`.
+   - Provide a `"Create Paired Atomic Rollback Point"` button that creates a `/var` Btrfs snapshot first and then triggers `TriggerOstreeUpgrade` so system binaries (`/usr`) and user state (`/var`) remain synchronized.
+3. Display an `adw::Toast` inside the main `adw::ToastOverlay` with the snapshot result.

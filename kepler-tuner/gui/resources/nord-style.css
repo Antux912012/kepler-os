@@ -1,0 +1,41 @@
+/* Nord Palette Styling for Kepler Tuner */
+@define-color base #2E3440;
+@define-color surface #3B4252;
+@define-color overlay #434C5E;
+@define-color muted #4C566A;
+@define-color subtle #D8DEE9;
+@define-color text #ECEFF4;
+@define-color love #BF616A;
+@define-color gold #EBCB8B;
+@define-color rose #B48EAD;
+@define-color pine #A3BE8C;
+@define-color foam #88C0D0;
+@define-color iris #81A1C1;
+
+window {
+    background-color: @base;
+    color: @text;
+}
+
+headerbar {
+    background-color: @surface;
+    border-bottom: 1px solid @overlay;
+}
+
+.card {
+    background-color: @surface;
+    border-radius: 12px;
+    border: 1px solid @overlay;
+}
+
+button.suggested-action {
+    background-color: @foam;
+    color: @base;
+    font-weight: bold;
+}
+
+button.destructive-action {
+    background-color: @love;
+    color: @text;
+    font-weight: bold;
+}

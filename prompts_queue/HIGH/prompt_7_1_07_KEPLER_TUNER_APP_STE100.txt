@@ -1,0 +1,29 @@
+# PROMPT ID: 7.1 | TITLE: CARGO WORKSPACE AND KEPLER-TUNED D-BUS DAEMON
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 07_KEPLER_TUNER_APP_STE100.md
+
+ROLE: Senior Rust Systems & Immutable Linux Kernel Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid Rust and TOML code blocks. Do not include conversational prose.
+
+TASK:
+Create a Cargo workspace and the `kepler-tuned` system daemon to manage kernel parameters, power states, and OSTree atomic deployments on Kepler OS Immutable.
+
+FILE 1: `Cargo.toml` (Workspace Root)
+1. Define a Cargo workspace with members: `["daemon", "gui"]`.
+2. Define shared workspace dependencies: `zbus = "4"`, `tokio = { version = "1", features = ["full"] }`, `serde = { version = "1", features = ["derive"] }`, `toml = "0.8"`, `anyhow = "1"`.
+
+FILE 2: `daemon/src/main.rs`
+1. Register the D-Bus service name `org.voyager.KeplerTuned` at object path `/org/voyager/KeplerTuned` on the system bus using `zbus`.
+2. Persist user settings to `/etc/kepler-tuner/config.toml` (never write to `/usr`) and re-apply them on daemon startup.
+3. Implement the interface `org.voyager.KeplerTuned1` with the following methods:
+   - `GetCpuProfile() -> String`: Read `/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor` and `energy_performance_preference`.
+   - `SetCpuProfile(governor: &str, epp: &str) -> zbus::fdo::Result<()>`: Validate inputs (`powersave`, `performance` for governor; `power`, `balance_power`, `balance_performance`, `performance` for EPP), write them to `/sys/devices/system/cpu/cpu*/cpufreq/`, and save to `/etc/kepler-tuner/config.toml`.
+   - `SetSchedExtProfile(scheduler: &str) -> zbus::fdo::Result<()>`: Stop any active `scx_*` systemd service and start the selected `sched-ext` service (`scx_lavd`, `scx_bpfland`, `scx_rusty`, or `none` for default BORE/EEVDF).
+   - `SetStoragePowerSave(enable_ps4: bool) -> zbus::fdo::Result<()>`: Configure NVMe APST (`default_ps_max_latency_us`) and PCIe ASPM policy (`/sys/module/pcie_aspm/parameters/policy`).
+   - `ApplyWorkloadPreset(preset: &str) -> zbus::fdo::Result<()>`:
+     * `"silent_mobile"`: Set governor=`powersave`, EPP=`power`, NVMe PS4=`true`, THP=`madvise`.
+     * `"balanced_desktop"`: Set governor=`powersave`, EPP=`balance_performance`, NVMe PS4=`true`, THP=`madvise`.
+     * `"scientific_compute"`: Set governor=`performance`, EPP=`performance`, NVMe PS4=`false`, THP=`always`, and write `100` to `/proc/sys/vm/swappiness`.
+   - `GetOstreeStatus() -> String`: Execute `ostree admin status` and return the current active commit hash, branch (`kepler/testing/x86_64-v3/gnome`), and rollback deployment status.
+   - `TriggerOstreeUpgrade() -> zbus::fdo::Result<String>`: Execute `ostree admin upgrade` asynchronously and return the staged commit hash for the next reboot.
+   - `TriggerOstreeRollback() -> zbus::fdo::Result<String>`: Execute `ostree admin undeploy 0` or `ostree admin deploy --rollback` to switch the default boot entry to the previous known-good atomic image.

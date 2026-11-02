@@ -1,0 +1,6 @@
+{
+  "uuid": "kepler-tuner-quick-settings@voyager.org",
+  "name": "Kepler Tuner Quick Settings",
+  "description": "Switch Kepler OS CPU, NVMe, and sched-ext workload profiles from GNOME Quick Settings.",
+  "shell-version": ["50", "51"]
+}

@@ -1,0 +1,37 @@
+# PROMPT ID: 8.5 | TITLE: CONTRIBUTING.md AND SECURITY.md GENERATION
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: LOW / MEDIUM)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Open-Source Governance & Security Policy Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Use imperative verbs, active voice, and concise sentences. Output only the two requested Markdown files.
+
+TASK:
+Create the `CONTRIBUTING.md` and `SECURITY.md` files in the root directory of the Kepler OS repository.
+
+FILE 1: `CONTRIBUTING.md`
+Write a contributor guide in strict ASD-STE100 containing these exact sections:
+1. **Code of Conduct & Scope:** State that contributors must submit clean, modular code targeting the `x86-64-v3` baseline, Debian Testing, GNOME 50+, or the `kepler-tuner` stack.
+2. **ASD-STE100 Documentation Requirement:**
+   - Mandate that all documentation, Wiki pages, code comments, commit messages, and pull request descriptions obey the **ASD-STE100 (Simplified Technical English)** standard.
+   - List the 4 core ASD-STE100 rules for contributors:
+     * Write one instruction per sentence.
+     * Use active voice and imperative verbs (for example: *Add*, *Fix*, *Verify*, *Remove*).
+     * Keep sentences under 20 words for procedural steps.
+     * Avoid ambiguous idioms or marketing jargon.
+3. **Developer Certificate of Origin (DCO 1.1) & GPLv3 Outbound License:**
+   - State that every commit must include a `Signed-off-by:` trailer (`git commit -s`) certifying compliance with the **Developer Certificate of Origin (DCO 1.1)**.
+   - State that all contributions are licensed outbound under the **GNU General Public License v3.0 or later (`GPL-3.0-or-later`)** and must include the `SPDX-License-Identifier: GPL-3.0-or-later` header.
+4. **EU AI Act Disclosure for AI-Assisted Contributions (Regulation EU 2024/1689):**
+   - Require contributors who use Large Language Models (LLMs) or AI coding assistants to disclose AI usage in the Pull Request description (`AI-Assisted: Yes (<Model Name>)`) and verify all generated code inside the container (`make builder && make iso && make test-iso`) before submitting a Pull Request.
+
+FILE 2: `SECURITY.md`
+Write a security and vulnerability reporting policy in strict ASD-STE100 containing these exact sections:
+1. **Supported Versions:**
+   - State that **Kepler OS** is a rolling-release distribution based on Debian Testing (`x86-64-v3`). Only the latest rolling snapshot, the latest `linux-cachyos-bore-v3` kernel in `Voyager-PPA`, and the latest packages in `Voyager-Flatpak` receive security updates.
+2. **Scope of Security Vulnerabilities:**
+   - In-scope components: `kepler-tuned` D-Bus root daemon, Polkit privilege escalation rules (`org.voyager.KeplerTuned.policy`), UEFI Secure Boot MOK signing scripts, `Voyager-PPA` / `Voyager-Flatpak` repository metadata signing, and `kepler-os-build` container privilege boundaries.
+   - Upstream components: Instruct users to report upstream Debian Testing vulnerabilities to the Debian Security Team and upstream kernel bugs to Linux/CachyOS upstream, while opening an advisory tracking issue in Kepler OS if a rebuild in `Voyager-PPA` is required.
+3. **Private Vulnerability Reporting Procedure:**
+   - Instruct reporters **not** to open public GitHub Issues for zero-day or privilege-escalation vulnerabilities.
+   - Instruct reporters to use **GitHub Private Vulnerability Reporting** (`Security -> Advisories -> Report a vulnerability`) or send an encrypted GPG email using the `Voyager-PPA` public key.
+   - Specify a 48-hour acknowledgment target and a 14-day coordinated disclosure and patch release window.

@@ -1,0 +1,28 @@
+# PROMPT ID: 7.4 | TITLE: GNOME 50+ QUICK SETTINGS EXTENSION FOR KEPLER TUNER
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 07_KEPLER_TUNER_APP_STE100.md
+
+ROLE: GNOME 50+ Shell Extension & GJS D-Bus Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid JSON and ESModule JavaScript (GJS) code blocks. Do not include conversational prose.
+
+TASK:
+Create a native GNOME 50+ Shell Quick Settings extension at `gnome-extension/kepler-tuner-quick-settings@voyager.org/` to switch Kepler Tuner workload presets and schedulers directly from the GNOME system menu.
+
+FILE 1: `gnome-extension/kepler-tuner-quick-settings@voyager.org/metadata.json`
+1. Set `"uuid": "kepler-tuner-quick-settings@voyager.org"`.
+2. Set `"name": "Kepler Tuner Quick Settings"`.
+3. Set `"description": "Switch Kepler OS CPU, NVMe, and sched-ext workload profiles from GNOME Quick Settings."`.
+4. Set `"shell-version": ["50", "51"]`.
+
+FILE 2: `gnome-extension/kepler-tuner-quick-settings@voyager.org/extension.js`
+1. Include `// SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Use GNOME 45+/50+ standard ESModule imports (`import Gio from 'gi://Gio';`, `import GObject from 'gi://GObject';`, `import * as Main from 'resource:///org/gnome/shell/ui/main.js';`, `import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';`, `import {QuickMenuToggle, SystemIndicator} from 'resource:///org/gnome/shell/ui/quickSettings.js';`).
+3. Create a `Gio.DBusProxy` connected to the system bus name `org.voyager.KeplerTuned` at object path `/org/voyager/KeplerTuned` for interface `org.voyager.KeplerTuned1`.
+4. Implement a `QuickMenuToggle` subclass (`KeplerTunerMenuToggle`) displaying:
+   - Title: `"Kepler Tuner"` and Subtitle showing the active profile (`Silent`, `Balanced`, or `Scientific`).
+   - Three menu items calling `ApplyWorkloadPresetRemote`:
+     * `"Silent / Mobile (EPP Power + NVMe PS4)"` -> `"silent_mobile"`
+     * `"Balanced Desktop (EPP Balance)"` -> `"balanced_desktop"`
+     * `"Scientific Compute (Performance + OpenBLAS/THP)"` -> `"scientific_compute"`
+   - A separator and a menu item `"Open Kepler Kernel & Atomic OS Tuner..."` that spawns `/usr/bin/kepler-tuner-gui`.
+5. Register the indicator in `Main.panel.statusArea.quickSettings.addExternalIndicator(this._indicator)` on `enable()` and destroy it cleanly on `disable()`.

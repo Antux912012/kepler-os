@@ -1,0 +1,27 @@
+# PROMPT ID: 6.2 | TITLE: QEMU/KVM HASWELL UEFI & OSTREE IMMUTABILITY TEST HARNESS
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 06_QEMU_KVM_TESTING_AND_SECURE_BOOT_STE100.md
+
+ROLE: Linux Virtualization & Immutable OS QA Engineer.
+STANDARD: ASD-STE100. Output only the requested bash scripts.
+
+TASK:
+Create an automated QEMU/KVM testing script named `scripts/test-iso-qemu.sh` and an inside-guest verification script `ostree-recipe/overlays/usr/bin/kepler-verify-immutability`.
+
+FILE 1: `scripts/test-iso-qemu.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Find the latest ISO file inside `build_out/*.iso`. Exit with code 1 if no ISO file is found.
+3. Accept an optional flag `--legacy-cpu` to emulate `SandyBridge` without AVX2 to verify that `kepler-installer-launcher` blocks installation.
+4. Accept an optional flag `--boot-installed` to boot directly from `build_out/test-nvme.qcow2` (without the CD-ROM) after Calamares finishes deploying the OSTree image.
+5. By default, set the QEMU CPU model to `-cpu Haswell-v4,+avx2,+bmi1,+bmi2,+fma,+movbe,+lzcnt -smp 4`.
+6. Allocate 4096 MB of RAM (`-m 4096M`) and enable KVM hardware acceleration (`-enable-kvm`).
+7. Create a 25GB `qcow2` virtual NVMe disk in `build_out/test-nvme.qcow2` if it does not exist, and attach it as an NVMe controller (`-drive file=build_out/test-nvme.qcow2,if=none,id=nvme0 -device nvme,drive=nvme0,serial=KEPLER01`).
+8. Configure UEFI Secure Boot using OVMF (`OVMF_CODE_4M.secboot.fd` and `OVMF_VARS.test.fd`).
+9. Enable VirtIO GPU with OpenGL acceleration (`-device virtio-vga-gl -display gtk,gl=on`).
+
+FILE 2: `ostree-recipe/overlays/usr/bin/kepler-verify-immutability`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Verify that `ostree admin status` returns an active `kepler` deployment on branch `kepler/testing/x86_64-v3/gnome`.
+3. Verify that `/usr` is mounted read-only (`touch /usr/.write-test` must fail with `Read-only file system`).
+4. Verify that `/var` and `/etc` are writable (`touch /var/.write-test && rm -f /var/.write-test`).
+5. Print `"OK: Kepler OS Immutable OSTree verification passed."`

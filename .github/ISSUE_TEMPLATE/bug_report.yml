@@ -1,0 +1,41 @@
+name: Bug Report
+description: Report a bug, build error, or hardware incompatibility in Kepler OS.
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue in Kepler OS Immutable.
+  - type: input
+    id: environment
+    attributes:
+      label: CPU and Microarchitecture
+      description: Provide CPU model and confirm AVX2 support (e.g. Intel Core i7-4770, AMD Ryzen 5).
+      placeholder: e.g. Intel Core i7-10700K (AVX2 confirmed)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Bug
+      description: A clear and concise description of the failure.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps or make target to trigger the issue.
+      placeholder: |
+        1. Run 'make iso'
+        2. Boot in QEMU via 'make test-iso'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Copy terminal logs or journalctl output.
+      render: shell

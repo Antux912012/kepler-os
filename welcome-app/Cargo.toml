@@ -1,0 +1,10 @@
+[package]
+name = "kepler-welcome"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+
+[dependencies]
+gtk = { version = "0.9", package = "gtk4", features = ["v4_14"] }
+adw = { version = "0.7", package = "libadwaita", features = ["v1_5"] }
+tokio = { version = "1", features = ["process", "rt-multi-thread"] }

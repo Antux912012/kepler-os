@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+[org.gnome.desktop.interface]
+color-scheme='prefer-dark'
+gtk-theme='Adwaita-dark'
+font-name='Inter 11'
+monospace-font-name='JetBrains Mono 10'
+show-battery-percentage=true
+
+[org.gnome.mutter]
+experimental-features=['scale-monitor-framebuffer', 'variable-refresh-rate']
+
+[org.gnome.desktop.wm.preferences]
+button-layout='appmenu:minimize,maximize,close'

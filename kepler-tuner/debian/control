@@ -1,0 +1,14 @@
+Source: kepler-tuner
+Section: admin
+Priority: optional
+Maintainer: Antonio <antux912012@users.noreply.github.com>
+Build-Depends: debhelper-compat (= 13), cargo, rustc, libgtk-4-dev, libadwaita-1-dev, pkg-config
+Standards-Version: 4.6.2
+Homepage: https://github.com/Antux912012/kepler-os
+
+Package: kepler-tuner
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, polkitd, ostree
+Description: System daemon and GTK4 GUI tuner for Kepler OS Immutable
+ Provides kernel sched-ext switching, NVMe power tuning, Btrfs snapshots, and
+ atomic OSTree update and rollback triggers.

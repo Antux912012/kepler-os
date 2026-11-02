@@ -1,0 +1,39 @@
+# PROMPT ID: 1.6 | TITLE: UNIFIED MASTER MAKEFILE GENERATOR
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 01_CONTAINER_AND_BUILD_PIPELINE.md
+
+ROLE: Principal Linux Build System & DevSecOps Automation Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only a single valid `Makefile` code block using strict TAB indentation for recipes. Do not include conversational prose.
+
+TASK:
+Create the complete, unified root `Makefile` for Kepler OS Immutable that consolidates all build, OSTree, OCI bootc, SBOM, CVE scan, MOK signing, QEMU/KVM testing, and Git compliance targets across Modules 01 through 08.
+
+TECHNICAL REQUIREMENTS:
+1. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Define configurable variables at the top of the `Makefile`:
+   - `ENGINE ?= podman`
+   - `IMAGE_NAME ?= kepler-ostree-builder:latest`
+   - `OSTREE_BRANCH ?= kepler/testing/x86_64-v3/gnome`
+   - `GHCR_USER ?= antux912012`
+   - `GHCR_IMAGE ?= ghcr.io/$(GHCR_USER)/kepler-os-immutable:testing-x86_64-v3`
+   - `CONTAINER_RUN = $(ENGINE) run --rm -it --privileged -v $(CURDIR):/workspace:Z`
+3. Declare `.PHONY` for all targets: `help init-tree builder mok-keys ostree-commit sbom scan-cve iso oci-bootc test-iso test-installed test-cpu-fail test-rollback test-tpm2-luks spdx-headers git-hooks compliance all clean`.
+4. Implement the following exact targets:
+   - `help`: Default target (`all` or `help`) that prints an aligned ASD-STE100 summary table of all available `make` targets grouped by category (Build, Supply-Chain Security, QEMU/KVM Verification, and Compliance).
+   - `init-tree`: Set `chmod +x ./init-tree.sh` and execute `./init-tree.sh`.
+   - `builder`: Build the isolated container image using `$(ENGINE) build -t $(IMAGE_NAME) -f Containerfile .`.
+   - `mok-keys`: Run `/workspace/scripts/generate-mok-keys.sh` inside `$(CONTAINER_RUN) --entrypoint /bin/bash $(IMAGE_NAME) -c "/workspace/scripts/generate-mok-keys.sh"`.
+   - `ostree-commit`: Depend on `mok-keys` and run `$(CONTAINER_RUN) --entrypoint /workspace/build-ostree-commit.sh $(IMAGE_NAME)`.
+   - `sbom`: Depend on `ostree-commit` and run `/workspace/scripts/generate-kepler-sbom.sh` inside the builder container to generate the SPDX 2.3 (`*.spdx.json`) and CycloneDX 1.5 (`*.cdx.json`) manifests.
+   - `scan-cve`: Depend on `sbom` and run `/workspace/scripts/scan-kepler-sbom-cve.sh` inside the builder container to scan both SBOM manifests with Trivy and Grype and enforce the fixable `CRITICAL` CVE gate.
+   - `iso`: Depend on `ostree-commit`, `sbom`, and `scan-cve`, create `build_out`, and run `$(CONTAINER_RUN) $(IMAGE_NAME)` to build the signed Live ISO and run `./scripts/verify-release-sbom.sh build_out`.
+   - `oci-bootc`: Depend on `ostree-commit` and run `/workspace/export-ostree-oci.sh` inside the builder container passing `GHCR_USER`, `GHCR_TOKEN`, and `GHCR_IMAGE`.
+   - `test-iso`: Execute `./scripts/test-iso-qemu.sh` on the host to boot the Live ISO with an emulated Intel Haswell `x86-64-v3` CPU, NVMe storage, and OVMF UEFI Secure Boot.
+   - `test-installed`: Execute `./scripts/test-iso-qemu.sh --boot-installed` on the host to boot the deployed OSTree NVMe image and run `kepler-verify-immutability`.
+   - `test-cpu-fail`: Execute `./scripts/test-iso-qemu.sh --legacy-cpu` on the host to verify that the Calamares hardware gate blocks pre-Haswell CPUs without `avx2`.
+   - `test-rollback`: Execute `./scripts/test-ostree-rollback-qemu.sh` on the host to test `ostree admin upgrade` and `ostree admin deploy --rollback` inside QEMU/KVM.
+   - `test-tpm2-luks`: Execute `./scripts/test-tpm2-luks-qemu.sh` on the host using `swtpm` to verify unattended TPM 2.0 (PCR 7+14) LUKS2 unlocking.
+   - `spdx-headers`: Set `chmod +x ./scripts/apply-spdx-headers.sh` and run `./scripts/apply-spdx-headers.sh`.
+   - `git-hooks`: Set `chmod +x ./scripts/install-git-hooks.sh` and run `./scripts/install-git-hooks.sh`.
+   - `compliance`: Depend on `spdx-headers` and `git-hooks`, and run `./scripts/update-readme-compliance-table.sh`.
+   - `clean`: Remove `work/`, `rootfs_staging/`, `profile/config/includes.chroot/ostree-repo/*`, `build_out/*.iso`, `build_out/*.tar`, `build_out/*.json`, `build_out/*.sarif`, and `build_out/swtpm-state`.

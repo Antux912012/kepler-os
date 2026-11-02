@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Kepler OS Welcome & Setup Assistant
+Exec=/usr/bin/kepler-welcome --autostart
+Icon=org.voyager.KeplerWelcome
+Categories=Utility;GTK;
+X-GNOME-Autostart-enabled=true
+Terminal=false

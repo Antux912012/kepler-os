@@ -1,0 +1,25 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+echo "=== [Kepler OS] Verifying TPM 2.0 LUKS2 Hardware Enclave ==="
+
+if [ ! -e /dev/tpmrm0 ]; then
+    echo "ERROR: /dev/tpmrm0 device missing." >&2
+    exit 1
+fi
+
+echo "Querying systemd-cryptenroll TPM2 devices..."
+systemd-cryptenroll --tpm2-device=list
+
+echo "Enrolling root volume with automated TPM2 token..."
+/usr/bin/kepler-enroll-tpm2
+
+echo "Dumping LUKS keyslot tokens to confirm systemd-tpm2 slot..."
+ROOT_DEV=$(findmnt -n -o SOURCE /sysroot 2>/dev/null || findmnt -n -o SOURCE / 2>/dev/null || true)
+PARENT_DEV=$(ls "/sys/class/block/$(basename "$ROOT_DEV")/slaves" 2>/dev/null | head -n 1 || true)
+if [ -n "$PARENT_DEV" ]; then
+    cryptsetup luksDump "/dev/$PARENT_DEV" | grep -i "systemd-tpm2"
+fi
+
+echo "OK: TPM 2.0 LUKS2 PCR 7+14 enrollment verified."

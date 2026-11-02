@@ -1,0 +1,16 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+echo "=== [Kepler OS] Enrolling UEFI Secure Boot MOK Certificate ==="
+MOK_CERT="/usr/share/kepler-mok/MOK.der"
+
+if [ ! -f "$MOK_CERT" ]; then
+    echo "ERROR: Certificate not found at $MOK_CERT" >&2
+    exit 1
+fi
+
+echo "Importing MOK certificate into UEFI NVRAM (requires root authorization)..."
+pkexec mokutil --import "$MOK_CERT"
+
+echo "OK: MOK certificate staged for enrollment. Reboot to confirm in MOKManager."

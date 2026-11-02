@@ -1,0 +1,23 @@
+# PROMPT ID: 5.3 | TITLE: UNIFIED GITLAB CI PIPELINE FOR PPA, OSTREE, OCI BOOTC, AND FLATPAK
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 05_CI_CD_VOYAGER_PPA_AND_FLATPAK_STE100.md
+
+ROLE: GitLab CI/CD Systems Engineer.
+STANDARD: ASD-STE100. Output only the `.gitlab-ci.yml` file.
+
+TASK:
+Create a `.gitlab-ci.yml` file with three stages (`build_ppa`, `compose_ostree_and_flatpak`, `deploy`) for `Voyager-PPA`, `Voyager-OSTree`, OCI `bootc` registry push, and `Voyager-Flatpak`.
+
+TECHNICAL REQUIREMENTS:
+1. Define global variables:
+   - `CFLAGS: "-march=x86-64-v3 -O3"`
+   - `CXXFLAGS: "-march=x86-64-v3 -O3"`
+   - `OSTREE_BRANCH: "kepler/testing/x86_64-v3/gnome"`
+2. Job 1 (`build_ppa_deb`):
+   - Use image `debian:testing-slim`, import `$VOYAGER_GPG_PRIVATE_KEY`, build `.deb` packages in `packages/`, add them to `repo/` via `reprepro`, and export `repo/` as an artifact.
+3. Job 2 (`compose_ostree_os`):
+   - Depend on `build_ppa_deb`. Run `./build-ostree-commit.sh`, GPG-sign the commit on `$OSTREE_BRANCH`, generate static deltas, run `./export-ostree-oci.sh` to push the OCI bootable container image, and export `ostree-prod-repo/` as an artifact.
+4. Job 3 (`build_flatpak_ostree`):
+   - Build manifests in `flatpaks/`, export to `flatpak-repo/` signed with `$VOYAGER_GPG_KEY_ID`, and generate static deltas.
+5. Job 4 (`deploy_all`):
+   - Publish `repo/`, `ostree-prod-repo/`, and `flatpak-repo/` to the production server via `rsync` on the `main` branch.

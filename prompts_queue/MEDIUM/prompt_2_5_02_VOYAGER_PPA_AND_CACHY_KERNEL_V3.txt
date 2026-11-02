@@ -1,0 +1,23 @@
+# PROMPT ID: 2.5 | TITLE: AUTOMATED CYCLONEDX AND SPDX SBOM GENERATOR
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 02_VOYAGER_PPA_AND_CACHY_KERNEL_V3.md
+
+ROLE: Linux Supply-Chain Security & SBOM Compliance Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts and Makefile snippets. Do not include conversational prose.
+
+TASK:
+Create an automated Software Bill of Materials (SBOM) generator script at `scripts/generate-kepler-sbom.sh` that produces both CycloneDX JSON and SPDX JSON manifests for every Kepler OS OSTree commit and Live ISO release.
+
+FILE 1: `scripts/generate-kepler-sbom.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Accept the staging rootfs or OSTree checkout path as `$1` (`TARGET_ROOT="${1:-/workspace/rootfs_staging}"`) and the output directory as `$2` (`OUT_DIR="${2:-/workspace/build_out}"`).
+4. Read the active OSTree commit hash from `/workspace/profile/config/includes.chroot/ostree-repo` on branch `kepler/testing/x86_64-v3/gnome` (`OSTREE_COMMIT`).
+5. Ensure `syft` (or `dpkg-query` + Python 3 SPDX/CycloneDX serializer fallback) is installed inside the builder container.
+6. Generate the **SPDX 2.3 JSON** SBOM (`"$OUT_DIR/kepler-os-immutable-${OSTREE_COMMIT:0:12}.spdx.json"`) scanning all installed Debian packages (`/var/lib/dpkg/status` inside `"$TARGET_ROOT"`), kernel modules (`/usr/lib/modules/`), `glibc-hwcaps` `x86-64-v3` libraries, and Python/R libraries.
+7. Generate the **CycloneDX 1.5 JSON** SBOM (`"$OUT_DIR/kepler-os-immutable-${OSTREE_COMMIT:0:12}.cdx.json"`).
+8. Embed a copy of both compressed SBOM manifests inside `"$TARGET_ROOT/usr/share/doc/kepler-os/sbom/"` before the final OSTree commit is sealed, and copy them to `"$OUT_DIR/"` for GitHub Releases attachment.
+9. Sign both JSON SBOM files with GPG (`--armor --detach-sign`) when `VOYAGER_GPG_KEY_ID` is set.
+
+FILE 2: `Makefile` target snippet (`sbom`)
+1. Add target `sbom` that executes `/workspace/scripts/generate-kepler-sbom.sh` inside the builder container and appends `*.spdx.json` and `*.cdx.json` to `build_out/SHA256SUMS`.

@@ -1,0 +1,26 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+echo "=== [Kepler OS] Verifying OSTree Immutability and State Separation ==="
+
+echo "1. Checking active OSTree deployment..."
+if ! ostree admin status | grep -q "kepler"; then
+    echo "ERROR: No active Kepler OSTree deployment detected." >&2
+    exit 1
+fi
+
+echo "2. Testing /usr read-only protection..."
+if touch /usr/.write-test 2>/dev/null; then
+    rm -f /usr/.write-test
+    echo "ERROR: /usr filesystem is mutable! OSTree read-only integrity violated." >&2
+    exit 1
+fi
+echo "Confirmed: /usr is strictly read-only."
+
+echo "3. Testing /var and /etc stateful write capabilities..."
+touch /var/.write-test && rm -f /var/.write-test
+touch /etc/.write-test && rm -f /etc/.write-test
+echo "Confirmed: /var and /etc are persistent and writable."
+
+echo "OK: Kepler OS Immutable OSTree verification passed."

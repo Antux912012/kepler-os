@@ -1,0 +1,2637 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-02T09:47:41.542165+00:00",
+    "component": {
+      "name": "kepler-os-immutable",
+      "version": "cc75adc6f546",
+      "type": "operating-system"
+    }
+  },
+  "components": [
+    {
+      "name": "3cpio",
+      "version": "0.14.0-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/3cpio@0.14.0-1+b1"
+    },
+    {
+      "name": "accountsservice",
+      "version": "26.27.3-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/accountsservice@26.27.3-2"
+    },
+    {
+      "name": "acl",
+      "version": "2.4.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/acl@2.4.0-1"
+    },
+    {
+      "name": "adduser",
+      "version": "3.159",
+      "type": "library",
+      "purl": "pkg:deb/debian/adduser@3.159"
+    },
+    {
+      "name": "adwaita-icon-theme",
+      "version": "51.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/adwaita-icon-theme@51.0-1"
+    },
+    {
+      "name": "amd64-microcode",
+      "version": "3.20251202.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/amd64-microcode@3.20251202.1"
+    },
+    {
+      "name": "apt",
+      "version": "3.3.3",
+      "type": "library",
+      "purl": "pkg:deb/debian/apt@3.3.3"
+    },
+    {
+      "name": "at-spi2-common",
+      "version": "2.62.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/at-spi2-common@2.62.1-1"
+    },
+    {
+      "name": "base-files",
+      "version": "14.2",
+      "type": "library",
+      "purl": "pkg:deb/debian/base-files@14.2"
+    },
+    {
+      "name": "base-passwd",
+      "version": "3.6.8",
+      "type": "library",
+      "purl": "pkg:deb/debian/base-passwd@3.6.8"
+    },
+    {
+      "name": "bash",
+      "version": "5.3-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/bash@5.3-4"
+    },
+    {
+      "name": "bc",
+      "version": "1.07.1-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/bc@1.07.1-4"
+    },
+    {
+      "name": "bsdutils",
+      "version": "1:2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/bsdutils@1:2.42.4-1"
+    },
+    {
+      "name": "btrfs-progs",
+      "version": "7.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/btrfs-progs@7.1-1"
+    },
+    {
+      "name": "bubblewrap",
+      "version": "0.13.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/bubblewrap@0.13.1-1"
+    },
+    {
+      "name": "buildah",
+      "version": "1.43.2+ds1-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/buildah@1.43.2+ds1-3+b1"
+    },
+    {
+      "name": "ca-certificates",
+      "version": "20260816+nmu1",
+      "type": "library",
+      "purl": "pkg:deb/debian/ca-certificates@20260816+nmu1"
+    },
+    {
+      "name": "ca-certificates-java",
+      "version": "20260311",
+      "type": "library",
+      "purl": "pkg:deb/debian/ca-certificates-java@20260311"
+    },
+    {
+      "name": "colord",
+      "version": "1.4.8-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/colord@1.4.8-3"
+    },
+    {
+      "name": "colord-data",
+      "version": "1.4.8-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/colord-data@1.4.8-3"
+    },
+    {
+      "name": "conmon",
+      "version": "2.1.13+ds1-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/conmon@2.1.13+ds1-2"
+    },
+    {
+      "name": "coreutils",
+      "version": "9.10-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/coreutils@9.10-1"
+    },
+    {
+      "name": "cpp",
+      "version": "4:16.1.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/cpp@4:16.1.0-3"
+    },
+    {
+      "name": "cpp-16",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/cpp-16@16.2.0-3"
+    },
+    {
+      "name": "cpp-16-x86-64-linux-gnu",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/cpp-16-x86-64-linux-gnu@16.2.0-3"
+    },
+    {
+      "name": "cpp-x86-64-linux-gnu",
+      "version": "4:16.1.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/cpp-x86-64-linux-gnu@4:16.1.0-3"
+    },
+    {
+      "name": "crun",
+      "version": "1.28-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/crun@1.28-1"
+    },
+    {
+      "name": "cryptsetup",
+      "version": "2:2.8.8-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/cryptsetup@2:2.8.8-1"
+    },
+    {
+      "name": "cryptsetup-bin",
+      "version": "2:2.8.8-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/cryptsetup-bin@2:2.8.8-1"
+    },
+    {
+      "name": "curl",
+      "version": "8.22.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/curl@8.22.0-1"
+    },
+    {
+      "name": "dash",
+      "version": "0.5.12-12",
+      "type": "library",
+      "purl": "pkg:deb/debian/dash@0.5.12-12"
+    },
+    {
+      "name": "dbus",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dbus@1.16.2-8"
+    },
+    {
+      "name": "dbus-bin",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dbus-bin@1.16.2-8"
+    },
+    {
+      "name": "dbus-daemon",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dbus-daemon@1.16.2-8"
+    },
+    {
+      "name": "dbus-session-bus-common",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dbus-session-bus-common@1.16.2-8"
+    },
+    {
+      "name": "dbus-system-bus-common",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dbus-system-bus-common@1.16.2-8"
+    },
+    {
+      "name": "dbus-user-session",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dbus-user-session@1.16.2-8"
+    },
+    {
+      "name": "dconf-cli",
+      "version": "51.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/dconf-cli@51.0-2"
+    },
+    {
+      "name": "dconf-gsettings-backend",
+      "version": "51.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/dconf-gsettings-backend@51.0-2"
+    },
+    {
+      "name": "dconf-service",
+      "version": "51.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/dconf-service@51.0-2"
+    },
+    {
+      "name": "debconf",
+      "version": "1.5.92",
+      "type": "library",
+      "purl": "pkg:deb/debian/debconf@1.5.92"
+    },
+    {
+      "name": "debian-archive-keyring",
+      "version": "2025.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/debian-archive-keyring@2025.1"
+    },
+    {
+      "name": "debianutils",
+      "version": "5.24",
+      "type": "library",
+      "purl": "pkg:deb/debian/debianutils@5.24"
+    },
+    {
+      "name": "default-jre",
+      "version": "2:1.25-77",
+      "type": "library",
+      "purl": "pkg:deb/debian/default-jre@2:1.25-77"
+    },
+    {
+      "name": "default-jre-headless",
+      "version": "2:1.25-77",
+      "type": "library",
+      "purl": "pkg:deb/debian/default-jre-headless@2:1.25-77"
+    },
+    {
+      "name": "desktop-base",
+      "version": "14.0.0~pre3",
+      "type": "library",
+      "purl": "pkg:deb/debian/desktop-base@14.0.0~pre3"
+    },
+    {
+      "name": "desktop-file-utils",
+      "version": "0.28-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/desktop-file-utils@0.28-1"
+    },
+    {
+      "name": "dictionaries-common",
+      "version": "1.31.4",
+      "type": "library",
+      "purl": "pkg:deb/debian/dictionaries-common@1.31.4"
+    },
+    {
+      "name": "diffutils",
+      "version": "1:3.12-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/diffutils@1:3.12-1"
+    },
+    {
+      "name": "dirmngr",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/dirmngr@2.4.9-8"
+    },
+    {
+      "name": "distrobox",
+      "version": "1.8.2.5-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/distrobox@1.8.2.5-1"
+    },
+    {
+      "name": "dmidecode",
+      "version": "3.7-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/dmidecode@3.7-1"
+    },
+    {
+      "name": "dmsetup",
+      "version": "2:1.02.205-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/dmsetup@2:1.02.205-2+b2"
+    },
+    {
+      "name": "dpkg",
+      "version": "1.23.11",
+      "type": "library",
+      "purl": "pkg:deb/debian/dpkg@1.23.11"
+    },
+    {
+      "name": "dracut",
+      "version": "112-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/dracut@112-7"
+    },
+    {
+      "name": "dracut-core",
+      "version": "112-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/dracut-core@112-7"
+    },
+    {
+      "name": "dracut-install",
+      "version": "112-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/dracut-install@112-7"
+    },
+    {
+      "name": "e2fsprogs",
+      "version": "1.47.4-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/e2fsprogs@1.47.4-1+b2"
+    },
+    {
+      "name": "eject",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/eject@2.42.4-1"
+    },
+    {
+      "name": "emacsen-common",
+      "version": "3.0.8",
+      "type": "library",
+      "purl": "pkg:deb/debian/emacsen-common@3.0.8"
+    },
+    {
+      "name": "evolution-data-server-common",
+      "version": "3.56.2-9",
+      "type": "library",
+      "purl": "pkg:deb/debian/evolution-data-server-common@3.56.2-9"
+    },
+    {
+      "name": "findutils",
+      "version": "4.11.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/findutils@4.11.0-3"
+    },
+    {
+      "name": "flatpak",
+      "version": "1.18.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/flatpak@1.18.4-1"
+    },
+    {
+      "name": "fontconfig",
+      "version": "2.17.1-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/fontconfig@2.17.1-5"
+    },
+    {
+      "name": "fontconfig-config",
+      "version": "2.17.1-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/fontconfig-config@2.17.1-5"
+    },
+    {
+      "name": "fonts-adwaita",
+      "version": "51.0+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-adwaita@51.0+dfsg-1"
+    },
+    {
+      "name": "fonts-adwaita-sans",
+      "version": "51.0+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-adwaita-sans@51.0+dfsg-1"
+    },
+    {
+      "name": "fonts-dejavu-core",
+      "version": "2.37-9",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-dejavu-core@2.37-9"
+    },
+    {
+      "name": "fonts-dejavu-extra",
+      "version": "2.37-9",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-dejavu-extra@2.37-9"
+    },
+    {
+      "name": "fonts-dejavu-mono",
+      "version": "2.37-9",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-dejavu-mono@2.37-9"
+    },
+    {
+      "name": "fonts-inter",
+      "version": "4.1+ds1-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-inter@4.1+ds1-4"
+    },
+    {
+      "name": "fonts-jetbrains-mono",
+      "version": "2.304+ds-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-jetbrains-mono@2.304+ds-7"
+    },
+    {
+      "name": "fonts-lyx",
+      "version": "2.5.3-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-lyx@2.5.3-2"
+    },
+    {
+      "name": "fonts-mathjax",
+      "version": "2.7.9+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-mathjax@2.7.9+dfsg-1"
+    },
+    {
+      "name": "fonts-quicksand",
+      "version": "0.2016-2.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-quicksand@0.2016-2.1"
+    },
+    {
+      "name": "fonts-urw-base35",
+      "version": "20200910-9",
+      "type": "library",
+      "purl": "pkg:deb/debian/fonts-urw-base35@20200910-9"
+    },
+    {
+      "name": "fuse-overlayfs",
+      "version": "1.14-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/fuse-overlayfs@1.14-1+b1"
+    },
+    {
+      "name": "fuse3",
+      "version": "3.18.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/fuse3@3.18.3-1"
+    },
+    {
+      "name": "gcc-16-base",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/gcc-16-base@16.2.0-3"
+    },
+    {
+      "name": "gettext-base",
+      "version": "1.0-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/gettext-base@1.0-5"
+    },
+    {
+      "name": "glycin-loaders",
+      "version": "2.2.2+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/glycin-loaders@2.2.2+ds-1"
+    },
+    {
+      "name": "glycin-thumbnailers",
+      "version": "2.2.2+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/glycin-thumbnailers@2.2.2+ds-1"
+    },
+    {
+      "name": "gnupg",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/gnupg@2.4.9-8"
+    },
+    {
+      "name": "gnupg-l10n",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/gnupg-l10n@2.4.9-8"
+    },
+    {
+      "name": "golang-github-containers-common",
+      "version": "0.67.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/golang-github-containers-common@0.67.1-3"
+    },
+    {
+      "name": "golang-github-containers-image",
+      "version": "5.39.2-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/golang-github-containers-image@5.39.2-3"
+    },
+    {
+      "name": "gpg",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/gpg@2.4.9-8"
+    },
+    {
+      "name": "gpg-agent",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/gpg-agent@2.4.9-8"
+    },
+    {
+      "name": "gpgconf",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/gpgconf@2.4.9-8"
+    },
+    {
+      "name": "gpgsm",
+      "version": "2.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/gpgsm@2.4.9-8"
+    },
+    {
+      "name": "grep",
+      "version": "3.12-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/grep@3.12-1"
+    },
+    {
+      "name": "gsettings-desktop-schemas",
+      "version": "51.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/gsettings-desktop-schemas@51.0-2"
+    },
+    {
+      "name": "gtk-update-icon-cache",
+      "version": "4.24.1+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/gtk-update-icon-cache@4.24.1+ds-1"
+    },
+    {
+      "name": "gzip",
+      "version": "1.14-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/gzip@1.14-1"
+    },
+    {
+      "name": "hicolor-icon-theme",
+      "version": "0.18-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/hicolor-icon-theme@0.18-2"
+    },
+    {
+      "name": "hostname",
+      "version": "3.25",
+      "type": "library",
+      "purl": "pkg:deb/debian/hostname@3.25"
+    },
+    {
+      "name": "init-system-helpers",
+      "version": "1.69+nmu3",
+      "type": "library",
+      "purl": "pkg:deb/debian/init-system-helpers@1.69+nmu3"
+    },
+    {
+      "name": "intel-microcode",
+      "version": "3.20260227.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/intel-microcode@3.20260227.1"
+    },
+    {
+      "name": "iucode-tool",
+      "version": "2.3.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/iucode-tool@2.3.1-3"
+    },
+    {
+      "name": "java-common",
+      "version": "0.77",
+      "type": "library",
+      "purl": "pkg:deb/debian/java-common@0.77"
+    },
+    {
+      "name": "kmod",
+      "version": "34.2-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/kmod@34.2-2+b2"
+    },
+    {
+      "name": "libabsl20260526",
+      "version": "20260526.0-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libabsl20260526@20260526.0-2+b1"
+    },
+    {
+      "name": "libaccountsservice1",
+      "version": "26.27.3-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libaccountsservice1@26.27.3-2"
+    },
+    {
+      "name": "libacl1",
+      "version": "2.4.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libacl1@2.4.0-1"
+    },
+    {
+      "name": "libaom3",
+      "version": "3.14.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libaom3@3.14.1-1"
+    },
+    {
+      "name": "libapparmor1",
+      "version": "4.1.8-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libapparmor1@4.1.8-3+b1"
+    },
+    {
+      "name": "libappstream5",
+      "version": "1.2.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libappstream5@1.2.1-1"
+    },
+    {
+      "name": "libapt-pkg7.0",
+      "version": "3.3.3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libapt-pkg7.0@3.3.3"
+    },
+    {
+      "name": "libarchive13t64",
+      "version": "3.8.9-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libarchive13t64@3.8.9-1"
+    },
+    {
+      "name": "libasound2-data",
+      "version": "1.2.16.1-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libasound2-data@1.2.16.1-2"
+    },
+    {
+      "name": "libasound2t64",
+      "version": "1.2.16.1-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libasound2t64@1.2.16.1-2"
+    },
+    {
+      "name": "libassuan9",
+      "version": "3.0.2-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libassuan9@3.0.2-2+b2"
+    },
+    {
+      "name": "libatk-bridge2.0-0t64",
+      "version": "2.62.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libatk-bridge2.0-0t64@2.62.1-1"
+    },
+    {
+      "name": "libatk1.0-0t64",
+      "version": "2.62.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libatk1.0-0t64@2.62.1-1"
+    },
+    {
+      "name": "libatomic1",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libatomic1@16.2.0-3"
+    },
+    {
+      "name": "libatspi2.0-0t64",
+      "version": "2.62.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libatspi2.0-0t64@2.62.1-1"
+    },
+    {
+      "name": "libattr1",
+      "version": "1:2.6.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libattr1@1:2.6.0-1"
+    },
+    {
+      "name": "libaudit-common",
+      "version": "1:4.1.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libaudit-common@1:4.1.2-1"
+    },
+    {
+      "name": "libaudit1",
+      "version": "1:4.1.2-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libaudit1@1:4.1.2-1+b2"
+    },
+    {
+      "name": "libavahi-client3",
+      "version": "0.8-18",
+      "type": "library",
+      "purl": "pkg:deb/debian/libavahi-client3@0.8-18"
+    },
+    {
+      "name": "libavahi-common-data",
+      "version": "0.8-18",
+      "type": "library",
+      "purl": "pkg:deb/debian/libavahi-common-data@0.8-18"
+    },
+    {
+      "name": "libavahi-common3",
+      "version": "0.8-18",
+      "type": "library",
+      "purl": "pkg:deb/debian/libavahi-common3@0.8-18"
+    },
+    {
+      "name": "libavahi-glib1",
+      "version": "0.8-18",
+      "type": "library",
+      "purl": "pkg:deb/debian/libavahi-glib1@0.8-18"
+    },
+    {
+      "name": "libavif16",
+      "version": "1.4.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libavif16@1.4.2-1"
+    },
+    {
+      "name": "libblake3-0",
+      "version": "1.8.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libblake3-0@1.8.2-1"
+    },
+    {
+      "name": "libblkid1",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libblkid1@2.42.4-1"
+    },
+    {
+      "name": "libbrotli1",
+      "version": "1.2.0-4+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libbrotli1@1.2.0-4+b2"
+    },
+    {
+      "name": "libbsd0",
+      "version": "0.12.2-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libbsd0@0.12.2-3"
+    },
+    {
+      "name": "libbz2-1.0",
+      "version": "1.0.8-6+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libbz2-1.0@1.0.8-6+b2"
+    },
+    {
+      "name": "libc-bin",
+      "version": "2.43-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/libc-bin@2.43-7"
+    },
+    {
+      "name": "libc-gconv-modules-extra",
+      "version": "2.43-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/libc-gconv-modules-extra@2.43-7"
+    },
+    {
+      "name": "libc6",
+      "version": "2.43-7",
+      "type": "library",
+      "purl": "pkg:deb/debian/libc6@2.43-7"
+    },
+    {
+      "name": "libcairo-gobject2",
+      "version": "1.18.4-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcairo-gobject2@1.18.4-3+b1"
+    },
+    {
+      "name": "libcairo2",
+      "version": "1.18.4-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcairo2@1.18.4-3+b1"
+    },
+    {
+      "name": "libcap-ng0",
+      "version": "0.9.6-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcap-ng0@0.9.6-1+b1"
+    },
+    {
+      "name": "libcap2",
+      "version": "1:2.78-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcap2@1:2.78-1+b1"
+    },
+    {
+      "name": "libcloudproviders0",
+      "version": "0.4.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcloudproviders0@0.4.1-1"
+    },
+    {
+      "name": "libcolord2",
+      "version": "1.4.8-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcolord2@1.4.8-3"
+    },
+    {
+      "name": "libcolorhug2",
+      "version": "1.4.8-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcolorhug2@1.4.8-3"
+    },
+    {
+      "name": "libcom-err2",
+      "version": "1.47.4-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcom-err2@1.47.4-1+b2"
+    },
+    {
+      "name": "libcomposefs1",
+      "version": "1.0.8-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcomposefs1@1.0.8-3"
+    },
+    {
+      "name": "libcrypt1",
+      "version": "1:4.5.2+20251210-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcrypt1@1:4.5.2+20251210-1"
+    },
+    {
+      "name": "libcryptsetup12",
+      "version": "2:2.8.8-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcryptsetup12@2:2.8.8-1"
+    },
+    {
+      "name": "libcups2t64",
+      "version": "2.4.18-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcups2t64@2.4.18-1"
+    },
+    {
+      "name": "libcurl3t64-gnutls",
+      "version": "8.22.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcurl3t64-gnutls@8.22.0-1"
+    },
+    {
+      "name": "libcurl4-gnutls",
+      "version": "8.22.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcurl4-gnutls@8.22.0-1"
+    },
+    {
+      "name": "libcurl4t64",
+      "version": "8.22.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libcurl4t64@8.22.0-1"
+    },
+    {
+      "name": "libdatrie1",
+      "version": "0.2.14-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdatrie1@0.2.14-2"
+    },
+    {
+      "name": "libdav1d7",
+      "version": "1.5.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdav1d7@1.5.4-1"
+    },
+    {
+      "name": "libdb5.3t64",
+      "version": "5.3.28+dfsg2-11+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdb5.3t64@5.3.28+dfsg2-11+b1"
+    },
+    {
+      "name": "libdbus-1-3",
+      "version": "1.16.2-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdbus-1-3@1.16.2-8"
+    },
+    {
+      "name": "libdconf1",
+      "version": "51.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdconf1@51.0-2"
+    },
+    {
+      "name": "libde265-0",
+      "version": "1.1.3-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libde265-0@1.1.3-1+b1"
+    },
+    {
+      "name": "libdebconfclient0",
+      "version": "0.283",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdebconfclient0@0.283"
+    },
+    {
+      "name": "libdebuginfod-common",
+      "version": "0.196-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdebuginfod-common@0.196-1"
+    },
+    {
+      "name": "libdeflate0",
+      "version": "1.25-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdeflate0@1.25-1"
+    },
+    {
+      "name": "libdevmapper1.02.1",
+      "version": "2:1.02.205-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdevmapper1.02.1@2:1.02.205-2+b2"
+    },
+    {
+      "name": "libdrm-amdgpu1",
+      "version": "2.4.134-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdrm-amdgpu1@2.4.134-3"
+    },
+    {
+      "name": "libdrm-common",
+      "version": "2.4.134-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdrm-common@2.4.134-3"
+    },
+    {
+      "name": "libdrm-intel1",
+      "version": "2.4.134-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdrm-intel1@2.4.134-3"
+    },
+    {
+      "name": "libdrm2",
+      "version": "2.4.134-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libdrm2@2.4.134-3"
+    },
+    {
+      "name": "libduktape207",
+      "version": "2.7.0-2+b3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libduktape207@2.7.0-2+b3"
+    },
+    {
+      "name": "libedit2",
+      "version": "3.1-20260512-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libedit2@3.1-20260512-1"
+    },
+    {
+      "name": "libelf1t64",
+      "version": "0.196-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libelf1t64@0.196-1"
+    },
+    {
+      "name": "libepoxy0",
+      "version": "1.5.10-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libepoxy0@1.5.10-2+b2"
+    },
+    {
+      "name": "libexif12",
+      "version": "0.6.26-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libexif12@0.6.26-1"
+    },
+    {
+      "name": "libexpat1",
+      "version": "2.9.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libexpat1@2.9.0-1"
+    },
+    {
+      "name": "libext2fs2t64",
+      "version": "1.47.4-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libext2fs2t64@1.47.4-1+b2"
+    },
+    {
+      "name": "libffi8",
+      "version": "3.8.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libffi8@3.8.0-2"
+    },
+    {
+      "name": "libfontconfig1",
+      "version": "2.17.1-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfontconfig1@2.17.1-5"
+    },
+    {
+      "name": "libfontenc1",
+      "version": "1:1.1.8-1+b3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfontenc1@1:1.1.8-1+b3"
+    },
+    {
+      "name": "libfreetype6",
+      "version": "2.14.3+dfsg-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfreetype6@2.14.3+dfsg-3"
+    },
+    {
+      "name": "libfribidi0",
+      "version": "1.0.16-5+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfribidi0@1.0.16-5+b1"
+    },
+    {
+      "name": "libfuse3-4",
+      "version": "3.18.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfuse3-4@3.18.3-1"
+    },
+    {
+      "name": "libfwupd3",
+      "version": "2.1.8-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfwupd3@2.1.8-1"
+    },
+    {
+      "name": "libfyaml0",
+      "version": "0.9.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libfyaml0@0.9.4-1"
+    },
+    {
+      "name": "libgav1-2",
+      "version": "0.20.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgav1-2@0.20.0-2+b2"
+    },
+    {
+      "name": "libgbm1",
+      "version": "26.1.6-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgbm1@26.1.6-1"
+    },
+    {
+      "name": "libgcc-s1",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgcc-s1@16.2.0-3"
+    },
+    {
+      "name": "libgcrypt20",
+      "version": "1.12.4-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgcrypt20@1.12.4-2"
+    },
+    {
+      "name": "libgd3",
+      "version": "2.3.3-14",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgd3@2.3.3-14"
+    },
+    {
+      "name": "libgdbm-compat4t64",
+      "version": "1.26-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgdbm-compat4t64@1.26-1+b2"
+    },
+    {
+      "name": "libgdbm6t64",
+      "version": "1.26-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgdbm6t64@1.26-1+b2"
+    },
+    {
+      "name": "libgdk-pixbuf-2.0-0",
+      "version": "2.44.8+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgdk-pixbuf-2.0-0@2.44.8+dfsg-1"
+    },
+    {
+      "name": "libgdk-pixbuf2.0-common",
+      "version": "2.44.8+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgdk-pixbuf2.0-common@2.44.8+dfsg-1"
+    },
+    {
+      "name": "libgfortran5",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgfortran5@16.2.0-3"
+    },
+    {
+      "name": "libgif7",
+      "version": "6.1.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgif7@6.1.3-1"
+    },
+    {
+      "name": "libgl1",
+      "version": "1.7.0-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgl1@1.7.0-3+b1"
+    },
+    {
+      "name": "libgl1-mesa-dri",
+      "version": "26.1.6-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgl1-mesa-dri@26.1.6-1"
+    },
+    {
+      "name": "libglib2.0-0t64",
+      "version": "2.90.1-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libglib2.0-0t64@2.90.1-2"
+    },
+    {
+      "name": "libglvnd0",
+      "version": "1.7.0-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libglvnd0@1.7.0-3+b1"
+    },
+    {
+      "name": "libglx-mesa0",
+      "version": "26.1.6-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libglx-mesa0@26.1.6-1"
+    },
+    {
+      "name": "libglx0",
+      "version": "1.7.0-3+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libglx0@1.7.0-3+b1"
+    },
+    {
+      "name": "libglycin-2-0",
+      "version": "2.2.2+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libglycin-2-0@2.2.2+ds-1"
+    },
+    {
+      "name": "libgmp10",
+      "version": "2:6.3.0+dfsg-5+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgmp10@2:6.3.0+dfsg-5+b2"
+    },
+    {
+      "name": "libgnutls30t64",
+      "version": "3.8.13-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgnutls30t64@3.8.13-1"
+    },
+    {
+      "name": "libgpg-error0",
+      "version": "1.61-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgpg-error0@1.61-5"
+    },
+    {
+      "name": "libgpgme45",
+      "version": "2.2.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgpgme45@2.2.0-2"
+    },
+    {
+      "name": "libgpgmepp7",
+      "version": "2.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgpgmepp7@2.2.0-3"
+    },
+    {
+      "name": "libgphoto2-6t64",
+      "version": "2.5.34-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgphoto2-6t64@2.5.34-2"
+    },
+    {
+      "name": "libgphoto2-port12t64",
+      "version": "2.5.34-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgphoto2-port12t64@2.5.34-2"
+    },
+    {
+      "name": "libgraphite2-3",
+      "version": "1.3.15-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgraphite2-3@1.3.15-2"
+    },
+    {
+      "name": "libgssapi-krb5-2",
+      "version": "1.22.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgssapi-krb5-2@1.22.1-3"
+    },
+    {
+      "name": "libgtk-3-0t64",
+      "version": "3.24.52-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgtk-3-0t64@3.24.52-3"
+    },
+    {
+      "name": "libgtk-3-common",
+      "version": "3.24.52-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgtk-3-common@3.24.52-3"
+    },
+    {
+      "name": "libgudev-1.0-0",
+      "version": "238-7+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgudev-1.0-0@238-7+b2"
+    },
+    {
+      "name": "libgusb2a",
+      "version": "0.4.9-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/libgusb2a@0.4.9-8"
+    },
+    {
+      "name": "libharfbuzz0b",
+      "version": "12.3.2-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libharfbuzz0b@12.3.2-2+b2"
+    },
+    {
+      "name": "libheif-plugin-dav1d",
+      "version": "1.23.6-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libheif-plugin-dav1d@1.23.6-2"
+    },
+    {
+      "name": "libheif-plugin-libde265",
+      "version": "1.23.6-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libheif-plugin-libde265@1.23.6-2"
+    },
+    {
+      "name": "libheif1",
+      "version": "1.23.6-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libheif1@1.23.6-2"
+    },
+    {
+      "name": "libhogweed6t64",
+      "version": "3.10.2-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libhogweed6t64@3.10.2-1+b1"
+    },
+    {
+      "name": "libhwy1t64",
+      "version": "1.3.0-5.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libhwy1t64@1.3.0-5.1"
+    },
+    {
+      "name": "libidn2-0",
+      "version": "2.3.8-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libidn2-0@2.3.8-5"
+    },
+    {
+      "name": "libieee1284-3t64",
+      "version": "0.2.11-15",
+      "type": "library",
+      "purl": "pkg:deb/debian/libieee1284-3t64@0.2.11-15"
+    },
+    {
+      "name": "libimagequant0",
+      "version": "4.4.1-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libimagequant0@4.4.1-1+b2"
+    },
+    {
+      "name": "libisl23",
+      "version": "0.28-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libisl23@0.28-1"
+    },
+    {
+      "name": "libjbig0",
+      "version": "2.1-6.1+b3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libjbig0@2.1-6.1+b3"
+    },
+    {
+      "name": "libjpeg62-turbo",
+      "version": "1:3.1.3-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/libjpeg62-turbo@1:3.1.3-4"
+    },
+    {
+      "name": "libjson-c5",
+      "version": "0.19+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libjson-c5@0.19+ds-1"
+    },
+    {
+      "name": "libjson-glib-1.0-0",
+      "version": "1.10.8+ds-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libjson-glib-1.0-0@1.10.8+ds-2+b1"
+    },
+    {
+      "name": "libjson-glib-1.0-common",
+      "version": "1.10.8+ds-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libjson-glib-1.0-common@1.10.8+ds-2"
+    },
+    {
+      "name": "libjxl0.11",
+      "version": "0.11.2-5.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libjxl0.11@0.11.2-5.1"
+    },
+    {
+      "name": "libk5crypto3",
+      "version": "1.22.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libk5crypto3@1.22.1-3"
+    },
+    {
+      "name": "libkeyutils1",
+      "version": "1.6.3-6+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libkeyutils1@1.6.3-6+b2"
+    },
+    {
+      "name": "libkmod2",
+      "version": "34.2-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libkmod2@34.2-2+b2"
+    },
+    {
+      "name": "libkrb5-3",
+      "version": "1.22.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libkrb5-3@1.22.1-3"
+    },
+    {
+      "name": "libkrb5support0",
+      "version": "1.22.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libkrb5support0@1.22.1-3"
+    },
+    {
+      "name": "libksba8",
+      "version": "1.8.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libksba8@1.8.1-1"
+    },
+    {
+      "name": "liblcms2-2",
+      "version": "2.19.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/liblcms2-2@2.19.1-1"
+    },
+    {
+      "name": "libldap2",
+      "version": "2.6.14+dfsg-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libldap2@2.6.14+dfsg-2"
+    },
+    {
+      "name": "liblerc4",
+      "version": "4.2.0+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/liblerc4@4.2.0+ds-1"
+    },
+    {
+      "name": "libllvm21",
+      "version": "1:21.1.8-13",
+      "type": "library",
+      "purl": "pkg:deb/debian/libllvm21@1:21.1.8-13"
+    },
+    {
+      "name": "liblsof0",
+      "version": "4.99.4+dfsg-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/liblsof0@4.99.4+dfsg-2"
+    },
+    {
+      "name": "libltdl7",
+      "version": "2.6.2-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libltdl7@2.6.2-3"
+    },
+    {
+      "name": "liblz4-1",
+      "version": "1.10.0-10",
+      "type": "library",
+      "purl": "pkg:deb/debian/liblz4-1@1.10.0-10"
+    },
+    {
+      "name": "liblzma5",
+      "version": "5.8.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/liblzma5@5.8.4-1"
+    },
+    {
+      "name": "liblzo2-2",
+      "version": "2.10-3+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/liblzo2-2@2.10-3+b2"
+    },
+    {
+      "name": "libmalcontent-0-0",
+      "version": "0.13.1-5+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmalcontent-0-0@0.13.1-5+b1"
+    },
+    {
+      "name": "libmbim-glib4",
+      "version": "1.34.0-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmbim-glib4@1.34.0-1+b1"
+    },
+    {
+      "name": "libmbim-proxy",
+      "version": "1.34.0-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmbim-proxy@1.34.0-1+b1"
+    },
+    {
+      "name": "libmd0",
+      "version": "1.3.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmd0@1.3.0-1"
+    },
+    {
+      "name": "libmm-glib0",
+      "version": "1.24.2-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmm-glib0@1.24.2-2+b1"
+    },
+    {
+      "name": "libmnl0",
+      "version": "1.0.5-3+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmnl0@1.0.5-3+b2"
+    },
+    {
+      "name": "libmount1",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmount1@2.42.4-1"
+    },
+    {
+      "name": "libmpc3",
+      "version": "1.3.1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmpc3@1.3.1-3"
+    },
+    {
+      "name": "libmpfr6",
+      "version": "4.2.2-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libmpfr6@4.2.2-3"
+    },
+    {
+      "name": "libncursesw6",
+      "version": "6.6+20260608-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libncursesw6@6.6+20260608-2"
+    },
+    {
+      "name": "libnettle8t64",
+      "version": "3.10.2-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnettle8t64@3.10.2-1+b1"
+    },
+    {
+      "name": "libnghttp2-14",
+      "version": "1.70.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnghttp2-14@1.70.0-1"
+    },
+    {
+      "name": "libnghttp3-9",
+      "version": "1.17.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnghttp3-9@1.17.0-1"
+    },
+    {
+      "name": "libngtcp2-16",
+      "version": "1.24.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libngtcp2-16@1.24.0-1"
+    },
+    {
+      "name": "libngtcp2-crypto-gnutls8",
+      "version": "1.24.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libngtcp2-crypto-gnutls8@1.24.0-1"
+    },
+    {
+      "name": "libngtcp2-crypto-ossl0",
+      "version": "1.24.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libngtcp2-crypto-ossl0@1.24.0-1"
+    },
+    {
+      "name": "libnl-3-200",
+      "version": "3.12.0-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnl-3-200@3.12.0-2+b1"
+    },
+    {
+      "name": "libnl-route-3-200",
+      "version": "3.12.0-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnl-route-3-200@3.12.0-2+b1"
+    },
+    {
+      "name": "libnpth0t64",
+      "version": "1.8-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnpth0t64@1.8-4"
+    },
+    {
+      "name": "libnspr4",
+      "version": "2:4.40-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnspr4@2:4.40-1"
+    },
+    {
+      "name": "libnss-systemd",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnss-systemd@262-1"
+    },
+    {
+      "name": "libnss3",
+      "version": "2:3.132-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libnss3@2:3.132-1"
+    },
+    {
+      "name": "libopenblas0-pthread",
+      "version": "0.3.34+ds-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libopenblas0-pthread@0.3.34+ds-2"
+    },
+    {
+      "name": "libopenjp2-7",
+      "version": "2.5.4-1.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libopenjp2-7@2.5.4-1.1"
+    },
+    {
+      "name": "libostree-1-1",
+      "version": "2026.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libostree-1-1@2026.4-1"
+    },
+    {
+      "name": "libp11-kit0",
+      "version": "0.26.5-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libp11-kit0@0.26.5-1"
+    },
+    {
+      "name": "libpam-modules",
+      "version": "1.7.0-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpam-modules@1.7.0-8"
+    },
+    {
+      "name": "libpam-modules-bin",
+      "version": "1.7.0-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpam-modules-bin@1.7.0-8"
+    },
+    {
+      "name": "libpam-runtime",
+      "version": "1.7.0-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpam-runtime@1.7.0-8"
+    },
+    {
+      "name": "libpam-systemd",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpam-systemd@262-1"
+    },
+    {
+      "name": "libpam0g",
+      "version": "1.7.0-8",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpam0g@1.7.0-8"
+    },
+    {
+      "name": "libpango-1.0-0",
+      "version": "1.58.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpango-1.0-0@1.58.2-1"
+    },
+    {
+      "name": "libpangocairo-1.0-0",
+      "version": "1.58.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpangocairo-1.0-0@1.58.2-1"
+    },
+    {
+      "name": "libpangoft2-1.0-0",
+      "version": "1.58.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpangoft2-1.0-0@1.58.2-1"
+    },
+    {
+      "name": "libpci3",
+      "version": "1:3.15.0-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpci3@1:3.15.0-2"
+    },
+    {
+      "name": "libpciaccess0",
+      "version": "0.19-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpciaccess0@0.19-2"
+    },
+    {
+      "name": "libpcre2-8-0",
+      "version": "10.48-3.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpcre2-8-0@10.48-3.1"
+    },
+    {
+      "name": "libpcsclite1",
+      "version": "2.5.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpcsclite1@2.5.2-1"
+    },
+    {
+      "name": "libperl5.42",
+      "version": "5.42.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libperl5.42@5.42.3-1"
+    },
+    {
+      "name": "libpixman-1-0",
+      "version": "0.46.4-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpixman-1-0@0.46.4-1+b2"
+    },
+    {
+      "name": "libpng16-16t64",
+      "version": "1.6.59-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpng16-16t64@1.6.59-1"
+    },
+    {
+      "name": "libpolkit-agent-1-0",
+      "version": "128-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpolkit-agent-1-0@128-1"
+    },
+    {
+      "name": "libpolkit-gobject-1-0",
+      "version": "128-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpolkit-gobject-1-0@128-1"
+    },
+    {
+      "name": "libpoppler-glib8t64",
+      "version": "26.07.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpoppler-glib8t64@26.07.0-3"
+    },
+    {
+      "name": "libpoppler162",
+      "version": "26.07.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpoppler162@26.07.0-3"
+    },
+    {
+      "name": "libpopt0",
+      "version": "1.19+dfsg-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpopt0@1.19+dfsg-2+b2"
+    },
+    {
+      "name": "libproc2-1",
+      "version": "2:4.0.7-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libproc2-1@2:4.0.7-1"
+    },
+    {
+      "name": "libpsl5t64",
+      "version": "0.23.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpsl5t64@0.23.3-1"
+    },
+    {
+      "name": "libpython3-stdlib",
+      "version": "3.14.7-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpython3-stdlib@3.14.7-3"
+    },
+    {
+      "name": "libpython3.14-minimal",
+      "version": "3.14.10-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpython3.14-minimal@3.14.10-1"
+    },
+    {
+      "name": "libpython3.14-stdlib",
+      "version": "3.14.10-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libpython3.14-stdlib@3.14.10-1"
+    },
+    {
+      "name": "libqrtr-glib0",
+      "version": "1.4.0-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libqrtr-glib0@1.4.0-1+b1"
+    },
+    {
+      "name": "librav1e0.8",
+      "version": "0.8.1-12",
+      "type": "library",
+      "purl": "pkg:deb/debian/librav1e0.8@0.8.1-12"
+    },
+    {
+      "name": "libreadline8t64",
+      "version": "8.3-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/libreadline8t64@8.3-4"
+    },
+    {
+      "name": "librsvg2-2",
+      "version": "2.63.3+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/librsvg2-2@2.63.3+dfsg-1"
+    },
+    {
+      "name": "librsvg2-common",
+      "version": "2.63.3+dfsg-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/librsvg2-common@2.63.3+dfsg-1"
+    },
+    {
+      "name": "libsane-common",
+      "version": "1.4.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsane-common@1.4.0-1"
+    },
+    {
+      "name": "libsane1",
+      "version": "1.4.0-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsane1@1.4.0-1+b1"
+    },
+    {
+      "name": "libsasl2-2",
+      "version": "2.1.28+dfsg1-12",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsasl2-2@2.1.28+dfsg1-12"
+    },
+    {
+      "name": "libsasl2-modules-db",
+      "version": "2.1.28+dfsg1-12",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsasl2-modules-db@2.1.28+dfsg1-12"
+    },
+    {
+      "name": "libseccomp2",
+      "version": "2.6.1-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libseccomp2@2.6.1-1+b2"
+    },
+    {
+      "name": "libselinux1",
+      "version": "3.11-2.1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libselinux1@3.11-2.1+b1"
+    },
+    {
+      "name": "libsemanage-common",
+      "version": "3.11-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsemanage-common@3.11-1"
+    },
+    {
+      "name": "libsemanage2",
+      "version": "3.11-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsemanage2@3.11-1+b2"
+    },
+    {
+      "name": "libsensors-config",
+      "version": "1:3.6.2-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsensors-config@1:3.6.2-2"
+    },
+    {
+      "name": "libsensors5",
+      "version": "1:3.6.2-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsensors5@1:3.6.2-2+b2"
+    },
+    {
+      "name": "libsepol2",
+      "version": "3.11-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsepol2@3.11-1"
+    },
+    {
+      "name": "libsharpyuv0",
+      "version": "1.6.0-0.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsharpyuv0@1.6.0-0.1"
+    },
+    {
+      "name": "libsmartcols1",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsmartcols1@2.42.4-1"
+    },
+    {
+      "name": "libsnmp-base",
+      "version": "5.9.5.2+dfsg-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsnmp-base@5.9.5.2+dfsg-3"
+    },
+    {
+      "name": "libsnmp45",
+      "version": "5.9.5.2+dfsg-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsnmp45@5.9.5.2+dfsg-3"
+    },
+    {
+      "name": "libsqlite3-0",
+      "version": "3.53.4-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsqlite3-0@3.53.4-2"
+    },
+    {
+      "name": "libss2",
+      "version": "1.47.4-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libss2@1.47.4-1+b2"
+    },
+    {
+      "name": "libssh2-1t64",
+      "version": "1.11.1-6",
+      "type": "library",
+      "purl": "pkg:deb/debian/libssh2-1t64@1.11.1-6"
+    },
+    {
+      "name": "libssl3t64",
+      "version": "3.6.5-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libssl3t64@3.6.5-1"
+    },
+    {
+      "name": "libstdc++6",
+      "version": "16.2.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libstdc++6@16.2.0-3"
+    },
+    {
+      "name": "libstemmer0d",
+      "version": "3.1.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libstemmer0d@3.1.1-1"
+    },
+    {
+      "name": "libsubid6",
+      "version": "1:4.20.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsubid6@1:4.20.3-1"
+    },
+    {
+      "name": "libsvtav1enc4",
+      "version": "4.2.0+dfsg-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsvtav1enc4@4.2.0+dfsg-3"
+    },
+    {
+      "name": "libsystemd-shared",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsystemd-shared@262-1"
+    },
+    {
+      "name": "libsystemd0",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libsystemd0@262-1"
+    },
+    {
+      "name": "libtasn1-6",
+      "version": "4.21.0-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtasn1-6@4.21.0-2+b1"
+    },
+    {
+      "name": "libtext-charwidth-perl",
+      "version": "0.04-12+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtext-charwidth-perl@0.04-12+b1"
+    },
+    {
+      "name": "libtext-iconv-perl",
+      "version": "1.7-9+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtext-iconv-perl@1.7-9+b1"
+    },
+    {
+      "name": "libtext-wrapi18n-perl",
+      "version": "0.06-11",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtext-wrapi18n-perl@0.06-11"
+    },
+    {
+      "name": "libthai-data",
+      "version": "0.1.30-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libthai-data@0.1.30-3"
+    },
+    {
+      "name": "libthai0",
+      "version": "0.1.30-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/libthai0@0.1.30-3"
+    },
+    {
+      "name": "libtiff6",
+      "version": "4.7.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtiff6@4.7.2-1"
+    },
+    {
+      "name": "libtinfo6",
+      "version": "6.6+20260608-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtinfo6@6.6+20260608-2"
+    },
+    {
+      "name": "libtirpc-common",
+      "version": "1.3.7+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtirpc-common@1.3.7+ds-1"
+    },
+    {
+      "name": "libtirpc3t64",
+      "version": "1.3.7+ds-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libtirpc3t64@1.3.7+ds-1"
+    },
+    {
+      "name": "libudev1",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libudev1@262-1"
+    },
+    {
+      "name": "libunistring5",
+      "version": "1.4.2-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libunistring5@1.4.2-1"
+    },
+    {
+      "name": "libusb-1.0-0",
+      "version": "2:1.0.30-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libusb-1.0-0@2:1.0.30-1"
+    },
+    {
+      "name": "libuuid1",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libuuid1@2.42.4-1"
+    },
+    {
+      "name": "libv4l-0t64",
+      "version": "1.32.0-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libv4l-0t64@1.32.0-5"
+    },
+    {
+      "name": "libv4lconvert0t64",
+      "version": "1.32.0-5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libv4lconvert0t64@1.32.0-5"
+    },
+    {
+      "name": "libvulkan1",
+      "version": "1.4.363.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libvulkan1@1.4.363.0-1"
+    },
+    {
+      "name": "libwayland-client0",
+      "version": "1.26.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libwayland-client0@1.26.0-1"
+    },
+    {
+      "name": "libwayland-cursor0",
+      "version": "1.26.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libwayland-cursor0@1.26.0-1"
+    },
+    {
+      "name": "libwayland-egl1",
+      "version": "1.26.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libwayland-egl1@1.26.0-1"
+    },
+    {
+      "name": "libwebp7",
+      "version": "1.6.0-0.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libwebp7@1.6.0-0.1"
+    },
+    {
+      "name": "libwrap0",
+      "version": "7.6.q-37",
+      "type": "library",
+      "purl": "pkg:deb/debian/libwrap0@7.6.q-37"
+    },
+    {
+      "name": "libx11-6",
+      "version": "2:1.8.14-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libx11-6@2:1.8.14-1"
+    },
+    {
+      "name": "libx11-data",
+      "version": "2:1.8.14-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libx11-data@2:1.8.14-1"
+    },
+    {
+      "name": "libx11-xcb1",
+      "version": "2:1.8.14-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libx11-xcb1@2:1.8.14-1"
+    },
+    {
+      "name": "libxau6",
+      "version": "1:1.0.11-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxau6@1:1.0.11-1+b2"
+    },
+    {
+      "name": "libxcb-dri3-0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-dri3-0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-glx0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-glx0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-present0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-present0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-randr0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-randr0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-render0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-render0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-shm0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-shm0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-sync1",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-sync1@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb-xfixes0",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb-xfixes0@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcb1",
+      "version": "1.17.0-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcb1@1.17.0-2+b2"
+    },
+    {
+      "name": "libxcomposite1",
+      "version": "1:0.4.6-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcomposite1@1:0.4.6-1+b2"
+    },
+    {
+      "name": "libxcursor1",
+      "version": "1:1.2.3-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxcursor1@1:1.2.3-1+b2"
+    },
+    {
+      "name": "libxdamage1",
+      "version": "1:1.1.7-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxdamage1@1:1.1.7-1+b1"
+    },
+    {
+      "name": "libxdmcp6",
+      "version": "1:1.1.5-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxdmcp6@1:1.1.5-2+b1"
+    },
+    {
+      "name": "libxext6",
+      "version": "2:1.3.4-1+b4",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxext6@2:1.3.4-1+b4"
+    },
+    {
+      "name": "libxfixes3",
+      "version": "1:6.0.0-2+b5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxfixes3@1:6.0.0-2+b5"
+    },
+    {
+      "name": "libxi6",
+      "version": "2:1.8.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxi6@2:1.8.4-1"
+    },
+    {
+      "name": "libxinerama1",
+      "version": "2:1.1.4-3+b5",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxinerama1@2:1.1.4-3+b5"
+    },
+    {
+      "name": "libxkbcommon0",
+      "version": "1.13.1-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxkbcommon0@1.13.1-1"
+    },
+    {
+      "name": "libxml2-16",
+      "version": "2.15.4+dfsg-1+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxml2-16@2.15.4+dfsg-1+b1"
+    },
+    {
+      "name": "libxmlb2",
+      "version": "0.3.29-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxmlb2@0.3.29-1"
+    },
+    {
+      "name": "libxpm4",
+      "version": "1:3.5.20-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxpm4@1:3.5.20-1"
+    },
+    {
+      "name": "libxrandr2",
+      "version": "2:1.5.4-1+b4",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxrandr2@2:1.5.4-1+b4"
+    },
+    {
+      "name": "libxrender1",
+      "version": "1:0.9.13-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxrender1@1:0.9.13-1"
+    },
+    {
+      "name": "libxres1",
+      "version": "2:1.2.1-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxres1@2:1.2.1-2"
+    },
+    {
+      "name": "libxshmfence1",
+      "version": "1.3.3-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxshmfence1@1.3.3-1+b2"
+    },
+    {
+      "name": "libxtst6",
+      "version": "2:1.2.6-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxtst6@2:1.2.6-1"
+    },
+    {
+      "name": "libxxf86vm1",
+      "version": "1:1.1.4-2+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxxf86vm1@1:1.1.4-2+b1"
+    },
+    {
+      "name": "libxxhash0",
+      "version": "0.8.3-2+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/libxxhash0@0.8.3-2+b2"
+    },
+    {
+      "name": "libyuv0",
+      "version": "0.0.1974.20261008-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libyuv0@0.0.1974.20261008-1"
+    },
+    {
+      "name": "libz3-4",
+      "version": "4.13.3-1.1",
+      "type": "library",
+      "purl": "pkg:deb/debian/libz3-4@4.13.3-1.1"
+    },
+    {
+      "name": "libzstd1",
+      "version": "1.5.7+dfsg-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/libzstd1@1.5.7+dfsg-4"
+    },
+    {
+      "name": "linux-base",
+      "version": "4.17",
+      "type": "library",
+      "purl": "pkg:deb/debian/linux-base@4.17"
+    },
+    {
+      "name": "linux-base-7.2.12+deb14-amd64",
+      "version": "7.2.12-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/linux-base-7.2.12+deb14-amd64@7.2.12-1"
+    },
+    {
+      "name": "linux-binary-7.2.12+deb14-amd64",
+      "version": "7.2.12-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/linux-binary-7.2.12+deb14-amd64@7.2.12-1"
+    },
+    {
+      "name": "linux-image-7.2.12+deb14-amd64",
+      "version": "7.2.12-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/linux-image-7.2.12+deb14-amd64@7.2.12-1"
+    },
+    {
+      "name": "linux-modules-7.2.12+deb14-amd64",
+      "version": "7.2.12-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/linux-modules-7.2.12+deb14-amd64@7.2.12-1"
+    },
+    {
+      "name": "login",
+      "version": "1:4.16.0-2+really2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/login@1:4.16.0-2+really2.42.4-1"
+    },
+    {
+      "name": "login.defs",
+      "version": "1:4.20.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/login.defs@1:4.20.3-1"
+    },
+    {
+      "name": "logsave",
+      "version": "1.47.4-1+b2",
+      "type": "library",
+      "purl": "pkg:deb/debian/logsave@1.47.4-1+b2"
+    },
+    {
+      "name": "lsof",
+      "version": "4.99.4+dfsg-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/lsof@4.99.4+dfsg-2"
+    },
+    {
+      "name": "mawk",
+      "version": "1.3.4.20260302-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/mawk@1.3.4.20260302-2"
+    },
+    {
+      "name": "media-types",
+      "version": "14.0.0",
+      "type": "library",
+      "purl": "pkg:deb/debian/media-types@14.0.0"
+    },
+    {
+      "name": "mesa-libgallium",
+      "version": "26.1.6-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/mesa-libgallium@26.1.6-1"
+    },
+    {
+      "name": "mount",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/mount@2.42.4-1"
+    },
+    {
+      "name": "ncurses-base",
+      "version": "6.6+20260608-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/ncurses-base@6.6+20260608-2"
+    },
+    {
+      "name": "ncurses-bin",
+      "version": "6.6+20260608-2",
+      "type": "library",
+      "purl": "pkg:deb/debian/ncurses-bin@6.6+20260608-2"
+    },
+    {
+      "name": "netavark",
+      "version": "1.17.2-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/netavark@1.17.2-3"
+    },
+    {
+      "name": "netbase",
+      "version": "6.6",
+      "type": "library",
+      "purl": "pkg:deb/debian/netbase@6.6"
+    },
+    {
+      "name": "openjdk-25-jre",
+      "version": "25.0.5+8-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/openjdk-25-jre@25.0.5+8-1"
+    },
+    {
+      "name": "openjdk-25-jre-headless",
+      "version": "25.0.5+8-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/openjdk-25-jre-headless@25.0.5+8-1"
+    },
+    {
+      "name": "openssl",
+      "version": "3.6.5-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/openssl@3.6.5-1"
+    },
+    {
+      "name": "openssl-provider-legacy",
+      "version": "3.6.5-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/openssl-provider-legacy@3.6.5-1"
+    },
+    {
+      "name": "passwd",
+      "version": "1:4.20.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/passwd@1:4.20.3-1"
+    },
+    {
+      "name": "pci.ids",
+      "version": "0.0~2026.10.24-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/pci.ids@0.0~2026.10.24-1"
+    },
+    {
+      "name": "perl",
+      "version": "5.42.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/perl@5.42.3-1"
+    },
+    {
+      "name": "perl-base",
+      "version": "5.42.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/perl-base@5.42.3-1"
+    },
+    {
+      "name": "perl-modules-5.42",
+      "version": "5.42.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/perl-modules-5.42@5.42.3-1"
+    },
+    {
+      "name": "pinentry-curses",
+      "version": "1.3.3-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/pinentry-curses@1.3.3-3"
+    },
+    {
+      "name": "podman",
+      "version": "5.8.6+ds1-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/podman@5.8.6+ds1-3"
+    },
+    {
+      "name": "polkitd",
+      "version": "128-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/polkitd@128-1"
+    },
+    {
+      "name": "procps",
+      "version": "2:4.0.7-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/procps@2:4.0.7-1"
+    },
+    {
+      "name": "python3",
+      "version": "3.14.7-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/python3@3.14.7-3"
+    },
+    {
+      "name": "python3-minimal",
+      "version": "3.14.7-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/python3-minimal@3.14.7-3"
+    },
+    {
+      "name": "python3-numpy",
+      "version": "1:2.4.6+ds-5+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/python3-numpy@1:2.4.6+ds-5+b1"
+    },
+    {
+      "name": "python3-numpy-dev",
+      "version": "1:2.4.6+ds-5+b1",
+      "type": "library",
+      "purl": "pkg:deb/debian/python3-numpy-dev@1:2.4.6+ds-5+b1"
+    },
+    {
+      "name": "python3.14",
+      "version": "3.14.10-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/python3.14@3.14.10-1"
+    },
+    {
+      "name": "python3.14-minimal",
+      "version": "3.14.10-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/python3.14-minimal@3.14.10-1"
+    },
+    {
+      "name": "readline-common",
+      "version": "8.3-4",
+      "type": "library",
+      "purl": "pkg:deb/debian/readline-common@8.3-4"
+    },
+    {
+      "name": "sed",
+      "version": "4.9-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/sed@4.9-3"
+    },
+    {
+      "name": "sensible-utils",
+      "version": "0.0.26",
+      "type": "library",
+      "purl": "pkg:deb/debian/sensible-utils@0.0.26"
+    },
+    {
+      "name": "sgml-base",
+      "version": "1.31+nmu1",
+      "type": "library",
+      "purl": "pkg:deb/debian/sgml-base@1.31+nmu1"
+    },
+    {
+      "name": "shared-mime-info",
+      "version": "2.4-5+b3",
+      "type": "library",
+      "purl": "pkg:deb/debian/shared-mime-info@2.4-5+b3"
+    },
+    {
+      "name": "sqv",
+      "version": "1.5.0-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/sqv@1.5.0-1"
+    },
+    {
+      "name": "systemd",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/systemd@262-1"
+    },
+    {
+      "name": "systemd-sysv",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/systemd-sysv@262-1"
+    },
+    {
+      "name": "systemd-timesyncd",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/systemd-timesyncd@262-1"
+    },
+    {
+      "name": "sysvinit-utils",
+      "version": "3.18-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/sysvinit-utils@3.18-1"
+    },
+    {
+      "name": "tar",
+      "version": "1.35+dfsg-6",
+      "type": "library",
+      "purl": "pkg:deb/debian/tar@1.35+dfsg-6"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026f-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/tzdata@2026f-1"
+    },
+    {
+      "name": "ucf",
+      "version": "3.0056",
+      "type": "library",
+      "purl": "pkg:deb/debian/ucf@3.0056"
+    },
+    {
+      "name": "udev",
+      "version": "262-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/udev@262-1"
+    },
+    {
+      "name": "uidmap",
+      "version": "1:4.20.3-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/uidmap@1:4.20.3-1"
+    },
+    {
+      "name": "user-session-migration",
+      "version": "0.5.2",
+      "type": "library",
+      "purl": "pkg:deb/debian/user-session-migration@0.5.2"
+    },
+    {
+      "name": "util-linux",
+      "version": "2.42.4-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/util-linux@2.42.4-1"
+    },
+    {
+      "name": "wget",
+      "version": "1.25.0-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/wget@1.25.0-3"
+    },
+    {
+      "name": "x11-common",
+      "version": "1:7.7+26",
+      "type": "library",
+      "purl": "pkg:deb/debian/x11-common@1:7.7+26"
+    },
+    {
+      "name": "xdg-dbus-proxy",
+      "version": "0.1.9-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/xdg-dbus-proxy@0.1.9-1"
+    },
+    {
+      "name": "xfonts-encodings",
+      "version": "1:1.0.4-2.2",
+      "type": "library",
+      "purl": "pkg:deb/debian/xfonts-encodings@1:1.0.4-2.2"
+    },
+    {
+      "name": "xfonts-utils",
+      "version": "1:7.7+7",
+      "type": "library",
+      "purl": "pkg:deb/debian/xfonts-utils@1:7.7+7"
+    },
+    {
+      "name": "xkb-data",
+      "version": "2.48-1",
+      "type": "library",
+      "purl": "pkg:deb/debian/xkb-data@2.48-1"
+    },
+    {
+      "name": "xml-core",
+      "version": "0.21",
+      "type": "library",
+      "purl": "pkg:deb/debian/xml-core@0.21"
+    },
+    {
+      "name": "zlib1g",
+      "version": "1:1.3.dfsg+really1.3.2-3",
+      "type": "library",
+      "purl": "pkg:deb/debian/zlib1g@1:1.3.dfsg+really1.3.2-3"
+    }
+  ]
+}

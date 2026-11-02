@@ -1,0 +1,49 @@
+# PROMPT ID: 4.2 | TITLE: CALAMARES OSTREE DEPLOYMENT AND CPU CHECK
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 04_CALAMARES_INSTALLER_AND_SYSCTL.md
+
+ROLE: Linux Immutable Installer Architect (Calamares + OSTree).
+STANDARD: ASD-STE100. Output only valid YAML and Bash files. Ensure strict 2-space YAML indentation.
+
+TASK:
+Configure the Calamares installer to deploy the embedded OSTree repository (`/ostree-repo`) to the target disk instead of unpacking a traditional mutable squashfs.
+
+FILE 1: `profile/config/includes.chroot/etc/calamares/settings.conf`
+1. Set `modules-search: [ local, /usr/lib/calamares/modules ]`.
+2. Define the `show` sequence: `welcome`, `locale`, `keyboard`, `partition`, `users`, `summary`.
+3. Define the `exec` sequence for OSTree deployment:
+   `partition`, `mount`, `shellprocess@ostree_deploy`, `fstab`, `locale`, `keyboard`, `localecfg`, `luksbootkeyfile`, `users`, `networkcfg`, `hwclock`, `bootloader-config`, `grubcfg`, `bootloader`, `umount`.
+4. Define the final `show` sequence: `finished`.
+5. Set `branding: kepler`, `prompt-install: true`, `disable-cancel-during-exec: true`.
+
+FILE 2: `profile/config/includes.chroot/etc/calamares/modules/shellprocess-ostree_deploy.conf`
+1. Configure a Calamares `shellprocess` module with `dontChroot: true` and `timeout: 1200`.
+2. Execute `/usr/local/bin/calamares-ostree-deploy.sh @@ROOT@@`.
+
+FILE 3: `profile/config/includes.chroot/usr/local/bin/calamares-ostree-deploy.sh`
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Accept target mountpoint `TARGET="$1"`.
+3. Initialize the OSTree filesystem layout on `"$TARGET"`:
+   - `ostree admin init-fs --modern "$TARGET"`
+   - `ostree admin os-init kepler --sysroot="$TARGET"`
+4. Pull the local OSTree commit from the Live ISO into the target disk:
+   - `ostree --repo="$TARGET/ostree/repo" pull-local /ostree-repo kepler/testing/x86_64-v3/gnome`
+5. Configure the remote URL for future atomic updates:
+   - `ostree --repo="$TARGET/ostree/repo" remote add --set=gpg-verify=true voyager-ostree https://ostree.voyager-project.org/repo`
+6. Deploy the stateroot with kernel arguments:
+   - `ostree admin deploy --sysroot="$TARGET" --os=kepler --karg="root=LABEL=kepler_root rw quiet splash zswap.enabled=0" voyager-ostree:kepler/testing/x86_64-v3/gnome`
+7. Create persistent directories `/var/home`, `/var/roothome`, and `/var/opt` inside `"$TARGET/ostree/deploy/kepler/var/"`.
+
+FILE 4: `profile/config/includes.chroot/etc/calamares/branding/kepler/branding.desc`
+1. Set `componentName: kepler`.
+2. Configure `strings`:
+   - `productName: "Kepler OS Immutable"`
+   - `shortProductName: "Kepler"`
+   - `version: "Atomic Rolling (Testing x86-64-v3)"`
+   - `shortVersion: "x86-64-v3-ostree"`
+   - `versionedName: "Kepler OS Atomic Rolling"`
+   - `shortVersionedName: "Kepler OS"`
+   - `bootloaderEntryName: "Kepler OS"`
+
+FILE 5: `profile/config/includes.chroot/usr/local/bin/kepler-installer-launcher`
+1. Write a bash script that verifies `x86-64-v3` support (`avx2`, `bmi1`, `bmi2`, `fma` in `/proc/cpuinfo`) before launching `pkexec calamares`, displaying a `zenity --error` dialog if any flag is missing.

@@ -1,0 +1,28 @@
+# PROMPT ID: 3.3 | TITLE: FIRST-BOOT WELCOME & SETUP ASSISTANT IN GTK4 AND LIBADWAITA
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 03_DESKTOP_GNOME50_AND_SCIENTIFIC_STACK.md
+
+ROLE: Rust GTK4 & Libadwaita Desktop Onboarding Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid Rust, TOML, and XDG Desktop configuration blocks. Do not include conversational prose.
+
+TASK:
+Create the `kepler-welcome` First-Boot Welcome & Setup Assistant application in Rust (`gtk4` + `libadwaita`) and its XDG autostart configuration for Kepler OS Immutable.
+
+FILE 1: `welcome-app/Cargo.toml`
+1. Set package name `kepler-welcome`, edition `2024`, and license `GPL-3.0-or-later`.
+2. Declare dependencies: `gtk = { version = "0.9", package = "gtk4", features = ["v4_14"] }`, `adw = { version = "0.7", package = "libadwaita", features = ["v1_5"] }`, `tokio = { version = "1", features = ["process", "rt-multi-thread"] }`.
+
+FILE 2: `welcome-app/src/main.rs`
+1. Include `// SPDX-License-Identifier: GPL-3.0-or-later` on line 1.
+2. Initialize `adw::Application` with application ID `org.voyager.KeplerWelcome`.
+3. Apply the Nord Palette CSS (`#2E3440`, `#3B4252`, `#88C0D0`) via `gtk::CssProvider`.
+4. Build an `adw::ApplicationWindow` (820x560) with an `adw::ToolbarView`, an `adw::HeaderBar`, an `adw::Carousel`, and an `adw::CarouselIndicatorDots` wizard with 4 onboarding pages:
+   - **Page 1 ("Welcome to Kepler OS Immutable"):** Explain the atomic OSTree architecture (`/usr` read-only, `/etc` and `/var` stateful) and display the EU AI Act (Regulation EU 2024/1689) and NASA/ESA/Kepler/Voyager non-affiliation notice summary.
+   - **Page 2 ("Hardware & Secure Boot Setup"):** Provide a button `"Enroll UEFI Secure Boot MOK Key"` that spawns `/usr/bin/kepler-enroll-mok` and a button `"Open Kepler Kernel & Power Tuner"` that launches `/usr/bin/kepler-tuner-gui`.
+   - **Page 3 ("Initialize Scientific Workspace"):** Provide a one-click button `"Assemble Kepler Science Distrobox"` that runs `/usr/bin/kepler-science-shell` to initialize the mutable `kepler-science-box` container (`R`, `Bioconductor`, `Python`, `OpenBLAS`, compilers), and a button to test `cytoscape-kepler`.
+   - **Page 4 ("Arda-Tech Ecosystem & Voyager-Flatpak"):** Provide one-click install buttons (`flatpak install -y voyager-flatpak ...`) for **Imladris** (Scientific IDE), **Vingilot** (Privacy Browser), and **Sulimo** (Local AI Runtime), plus an `"Open GNOME Software"` button.
+5. Include an `adw::SwitchRow` labeled `"Show this assistant on startup"`. When toggled off (or when the user clicks `"Finish Setup"`), create the marker file `~/.config/kepler-welcome-done` and remove `~/.config/autostart/org.voyager.KeplerWelcome.desktop` so the assistant does not run on subsequent logins.
+
+FILE 3: `ostree-recipe/overlays/etc/xdg/autostart/org.voyager.KeplerWelcome.desktop`
+1. Set `Type=Application`, `Name=Kepler OS Welcome & Setup Assistant`, `Exec=/usr/bin/kepler-welcome --autostart`, `Icon=org.voyager.KeplerWelcome`, and `X-GNOME-Autostart-enabled=true`.
+2. Ensure `/usr/bin/kepler-welcome` exits immediately with code 0 when `--autostart` is passed and `~/.config/kepler-welcome-done` exists.

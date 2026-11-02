@@ -1,0 +1,53 @@
+name: Lint PR Compliance
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+  contents: read
+
+jobs:
+  lint-compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify DCO Sign-off
+        run: |
+          echo "Verifying DCO Signed-off-by trailer in commits..."
+          COMMITS=$(git log --no-merges origin/${{ github.base_ref }}..HEAD --format="%H")
+          for commit in $COMMITS; do
+            if ! git log -1 --format="%B" "$commit" | grep -q "^Signed-off-by:"; then
+              echo "ERROR: Commit $commit missing DCO 'Signed-off-by:' trailer." >&2
+              echo "Remedy: Run 'git commit --amend -s' to sign off your commits." >&2
+              exit 1
+            fi
+          done
+          echo "OK: All commits contain DCO trailers."
+
+      - name: Verify SPDX GPL-3.0 Headers
+        run: |
+          echo "Scanning changed files for SPDX GPLv3 license header..."
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}..HEAD)
+          MISSING=0
+          for file in $CHANGED_FILES; do
+            [ -f "$file" ] || continue
+            case "$file" in
+              *.sh|*.py|*.rs|*.js|*.c|*.h|*.conf|Makefile|Containerfile)
+                if ! head -n 5 "$file" | grep -q "SPDX-License-Identifier: GPL-3.0-or-later"; then
+                  echo "ERROR: $file lacks SPDX-License-Identifier: GPL-3.0-or-later" >&2
+                  MISSING=1
+                fi
+                ;;
+            esac
+          done
+          if [ "$MISSING" -eq 1 ]; then
+            echo "Remedy: Run 'make spdx-headers' to add required headers." >&2
+            exit 1
+          fi
+          echo "OK: All source files have valid SPDX headers."

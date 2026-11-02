@@ -1,0 +1,26 @@
+# PROMPT ID: 6.4 | TITLE: AUTOMATED OSTREE UPGRADE AND ROLLBACK TEST HARNESS
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 06_QEMU_KVM_TESTING_AND_SECURE_BOOT_STE100.md
+
+ROLE: Linux Immutable OS QA & OSTree Automation Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable bash scripts. Do not include conversational prose.
+
+TASK:
+Create two scripts to test atomic OSTree upgrades (`ostree admin deploy`) and rollbacks (`ostree admin deploy --rollback`) inside the QEMU/KVM virtual NVMe environment.
+
+FILE 1: `ostree-recipe/overlays/usr/bin/kepler-test-ostree-rollback` (Guest-side test script)
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Inspect the current booted OSTree deployment using `ostree admin status` and record the active commit checksum (`ACTIVE_COMMIT`).
+4. Simulate a synthetic test update on the local OSTree repository (`/ostree/repo`):
+   - Create a temporary overlay directory `/tmp/kepler-test-commit/usr/share/kepler-qa` containing a marker file `atomic-upgrade-marker.txt`.
+   - Commit the synthetic tree onto branch `kepler/testing/x86_64-v3/gnome` using `ostree --repo=/ostree/repo commit --branch=kepler/testing/x86_64-v3/gnome --tree=ref="${ACTIVE_COMMIT}" --tree=dir=/tmp/kepler-test-commit`.
+   - Stage the new deployment using `ostree admin upgrade`.
+5. Verify with `ostree admin status` that two deployments exist (`index 0` staged for next boot, `index 1` as the current rollback deployment).
+6. Execute `ostree admin deploy --rollback` to verify that the boot order switches cleanly back to the known-good deployment, and print `"OK: OSTree atomic upgrade and rollback state transition verified."`
+
+FILE 2: `scripts/test-ostree-rollback-qemu.sh` (Host-side QEMU runner)
+1. Use `#!/bin/bash` and `set -euo pipefail`.
+2. Include `# SPDX-License-Identifier: GPL-3.0-or-later` on line 2.
+3. Boot `build_out/test-nvme.qcow2` in headless QEMU/KVM (`-cpu Haswell-v4,+avx2,+bmi1,+bmi2,+fma,+movbe,+lzcnt -smp 4 -m 4096M -enable-kvm -nographic`) with SSH port forwarding (`hostfwd=tcp::2222-:22`).
+4. Execute `/usr/bin/kepler-verify-immutability` and `/usr/bin/kepler-test-ostree-rollback` inside the guest via SSH, and exit with code 0 only if both scripts pass.

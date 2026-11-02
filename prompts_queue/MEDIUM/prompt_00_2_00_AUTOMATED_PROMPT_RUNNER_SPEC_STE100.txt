@@ -1,0 +1,9 @@
+# PROMPT ID: 00.2 | TITLE: Unnamed Prompt
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 00_AUTOMATED_PROMPT_RUNNER_SPEC_STE100.md
+
+ROLE: Python & Linux Build Automation Engineer.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only executable Python 3 and Bash code blocks. Do not include conversational prose.
+
+TASK:
+Create a Python 3 orchestrator script (`scripts/run-kepler-prompts.py`) and a Bash wrapper (`scripts/run-kepler-prompts.sh`) that read all Kepler OS Markdown specification files (`01_*.md` to `08_*.md`) and execute each `[PROMPT START] ...

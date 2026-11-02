@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+Package: *
+Pin: origin ppa.voyager-project.org
+Pin-Priority: 1001

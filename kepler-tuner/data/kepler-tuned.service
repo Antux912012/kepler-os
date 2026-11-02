@@ -1,0 +1,19 @@
+[Unit]
+Description=Kepler OS Immutable Kernel, Power and OSTree Daemon
+Documentation=https://github.com/Antux912012/kepler-os/wiki
+After=dbus.service
+Wants=dbus.service
+
+[Service]
+Type=dbus
+BusName=org.voyager.KeplerTuned
+ExecStart=/usr/libexec/kepler-tuned
+Restart=on-failure
+StateDirectory=kepler-tuner
+ConfigurationDirectory=kepler-tuner
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/sys /proc/sys /etc/kepler-tuner /.snapshots
+
+[Install]
+WantedBy=multi-user.target

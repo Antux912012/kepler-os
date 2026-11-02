@@ -1,0 +1,23 @@
+name: Feature Request
+description: Propose a new feature, package optimization, or tuner capability for Kepler OS.
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please verify that requested features align with the x86-64-v3 baseline and immutable OSTree architecture.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your proposal related to a specific limitation in scientific packages, power tuning, or build orchestration?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the technical implementation in ASD-STE100 style.
+    validations:
+      required: true

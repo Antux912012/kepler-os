@@ -1,0 +1,23 @@
+# PROMPT ID: 8.2 | TITLE: GITHUB README AND ARCHITECTURE OVERVIEW
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Principal Linux Distribution Architect & Technical Writer.
+STANDARD: ASD-STE100 (Simplified Technical English). Write clear, concise instructions for developers and enthusiasts. Output only the `README.md` file.
+
+TASK:
+Create the root `README.md` file for the Kepler OS GitHub repository.
+
+REQUIRED SECTIONS IN `README.md`:
+1. **Header & Badges:** Project title (`Kepler OS`), SPDX License badge (`GPL-3.0-or-later`), Target Architecture badge (`x86-64-v3 / Haswell+`), and Base Distro badge (`Debian Testing`).
+2. **What is Kepler OS?:** A concise overview for enthusiasts and researchers (rolling-release scientific workstation based on Debian Testing, CachyOS BORE kernel, GNOME 50+, and Arda-Tech applications).
+3. **System Architecture Diagram (ASCII / Mermaid):**
+   - Layer 1 (Hardware Baseline): `x86-64-v3` (Intel 4th Gen Haswell+ / AMD Excavator+ with AVX2, BMI1, BMI2, FMA).
+   - Layer 2 (Immutable Kernel & Atomic Core): Read-only `/usr` via **OSTree** (`kepler/testing/x86_64-v3/gnome`), stateful `/etc` (3-way merge) and `/var`, `linux-cachyos-bore-v3` (1000Hz, Full Preempt, `sched-ext`, `dracut-ostree`, `zram` zstd, UEFI Secure Boot MOK).
+   - Layer 3 (Repositories): `Voyager-OSTree` (atomic OS upgrades & rollbacks) + `Voyager-PPA` (image build & Distrobox APT source) + `Voyager-Flatpak` (Arda-Tech apps).
+   - Layer 4 (Desktop & Control): GNOME 50+ Wayland (Nord Palette in `/usr/share/glib-2.0/schemas`) + `kepler-tuner` (Rust/GTK4/Libadwaita + `kepler-tuned` D-Bus daemon managing power states and `ostree admin upgrade`/`rollback`).
+   - Layer 5 (Hybrid Scientific Stack): Immutable base (OpenJDK 21 + Cytoscape 70% RAM wrapper, Python 3 + OpenBLAS, R Base) + Mutable **`kepler-science-box`** (Distrobox / Rootless Podman for custom `pip`, `CRAN`, and `Bioconductor` compilation).
+4. **Quick Start for Developers (Containerized Build):**
+   - Step-by-step commands (`git clone`, `make builder`, `make mok-keys`, `make ostree-commit`, `make iso`, `make test-iso`, `make test-installed`).
+5. **Compliance, Disclaimers & Credits Summary:**
+   - Explicit summary of the **GPLv3 License**, the **EU AI Act (Regulation EU 2024/1689) Transparency Notice**, the **Non-Affiliation Disclaimer** (not affiliated with NASA, ESA, or any Kepler/Voyager entity), and **Acknowledgments** to Debian, GNOME, and CachyOS (linking to `NOTICE.md`).

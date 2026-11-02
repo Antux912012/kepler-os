@@ -1,0 +1,14 @@
+# PROMPT ID: 6.3 | TITLE: MAKEFILE QA TARGETS
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 06_QEMU_KVM_TESTING_AND_SECURE_BOOT_STE100.md
+
+ROLE: Build System Maintainer.
+STANDARD: ASD-STE100. Output only the Makefile snippet to append to the root `Makefile`.
+
+TASK:
+Add five targets to the `Makefile`:
+1. `mok-keys`: Run `./scripts/generate-mok-keys.sh` inside the builder container.
+2. `test-iso`: Run `./scripts/test-iso-qemu.sh` on the host to boot the Live Installer ISO with an emulated Intel Haswell `x86-64-v3` CPU, NVMe storage, and UEFI Secure Boot.
+3. `test-installed`: Run `./scripts/test-iso-qemu.sh --boot-installed` to boot the deployed OSTree system from the virtual NVMe disk and run `kepler-verify-immutability`.
+4. `test-cpu-fail`: Run `./scripts/test-iso-qemu.sh --legacy-cpu` to verify that the Calamares hardware gate rejects pre-Haswell CPUs without `avx2`.
+5. `test-rollback`: Run `./scripts/test-ostree-rollback-qemu.sh`.

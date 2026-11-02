@@ -1,0 +1,39 @@
+# PROMPT ID: 3.2 | TITLE: CYTOSCAPE WRAPPER, DISTROBOX INI, AND IMMUTABLE GNOME SCHEMAS
+# TARGET MODEL: Gemini 3.8 Flash [MEDIUM] (Raw: MEDIUM)
+# SOURCE MODULE: 03_DESKTOP_GNOME50_AND_SCIENTIFIC_STACK.md
+
+ROLE: Scientific Immutable Workstation Engineer.
+STANDARD: ASD-STE100. Output only the requested configuration and script files.
+
+TASK:
+Create the Cytoscape JVM wrapper, the declarative Distrobox scientific environment, and the immutable GNOME 50+ GSettings overrides.
+
+FILE 1: `ostree-recipe/overlays/usr/bin/cytoscape-kepler`
+1. Use `#!/bin/bash` and `set -e`. (Place in `/usr/bin` because `/usr/local` links to `/var/usrlocal` on OSTree systems).
+2. Read `MemTotal` from `/proc/meminfo` and calculate 70% of total RAM in Megabytes (`MAX_HEAP_MB`).
+3. Export `JAVA_TOOL_OPTIONS="-Xmx${MAX_HEAP_MB}m -XX:+UseG1GC -XX:+ParallelRefProcEnabled -Dsun.java2d.opengl=true"`.
+4. Execute `/usr/bin/cytoscape "$@"`.
+
+FILE 2: `ostree-recipe/overlays/etc/distrobox/distrobox.ini`
+1. Define a declarative Distrobox container named `[kepler-science-box]` so users can install mutable C/Fortran compilers, CRAN/Bioconductor packages, and pip packages without modifying the read-only `/usr` partition:
+   - `image=debian:testing`
+   - `init=false`
+   - `nvidia=false`
+   - `pull=true`
+   - `additional_packages="build-essential gfortran cmake pkg-config r-base-dev python3-dev python3-venv python3-pip libopenblas-dev libcurl4-openssl-dev libssl-dev libxml2-dev git"`
+2. Create a helper script `ostree-recipe/overlays/usr/bin/kepler-science-shell` that runs `distrobox assemble create --file /etc/distrobox/distrobox.ini && distrobox enter kepler-science-box`.
+
+FILE 3: `ostree-recipe/overlays/usr/share/glib-2.0/schemas/99_kepler_os.gschema.override`
+1. Under `[org.gnome.desktop.interface]`:
+   - Set `color-scheme='prefer-dark'`
+   - Set `gtk-theme='Adwaita-dark'`
+   - Set `font-name='Inter 11'`
+   - Set `monospace-font-name='JetBrains Mono 10'`
+   - Set `show-battery-percentage=true`
+2. Under `[org.gnome.mutter]`:
+   - Set `experimental-features=['scale-monitor-framebuffer', 'variable-refresh-rate']`
+3. Under `[org.gnome.desktop.wm.preferences]`:
+   - Set `button-layout='appmenu:minimize,maximize,close'`
+
+FILE 4: Update instruction for `0500-kepler-ostree-setup.hook.chroot`
+1. Provide the command `glib-compile-schemas /usr/share/glib-2.0/schemas/` so the defaults are compiled directly into the immutable `/usr` tree.

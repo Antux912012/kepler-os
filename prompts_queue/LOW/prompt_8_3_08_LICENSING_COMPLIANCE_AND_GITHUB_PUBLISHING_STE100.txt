@@ -1,0 +1,24 @@
+# PROMPT ID: 8.3 | TITLE: GITHUB WIKI PAGES GENERATION
+# TARGET MODEL: Gemini 3.8 Flash [LOW] (Raw: LOW)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: Technical Documentation Engineer (ASD-STE100).
+STANDARD: ASD-STE100. Keep sentences under 20 words where possible. Use tables and numbered steps. Output only the 5 requested Markdown files inside the `wiki/` folder.
+
+TASK:
+Create the GitHub Wiki documentation files inside the `wiki/` directory for developers and enthusiasts:
+
+FILE 1: `wiki/Home.md`
+- Welcome guide, navigation index to all Wiki pages, hardware requirements (`x86-64-v3` CPU, 4 GB RAM minimum, 20 GB NVMe/SSD storage), and quick links to `Voyager-PPA` and `Voyager-Flatpak`.
+
+FILE 2: `wiki/Architecture-and-x86_64-v3-Spec.md`
+- Detailed explanation of the `x86-64-v3` microarchitecture level, immutable OSTree layout (`/usr` read-only, `/etc` 3-way merge, `/var` stateful), why Intel 4th Gen (Haswell) / AMD Excavator is required, how `glibc-hwcaps` works, and how the CachyOS BORE scheduler interacts with `sched-ext`.
+
+FILE 3: `wiki/Developer-Build-Guide.md`
+- Complete step-by-step instructions to build the OSTree commit and ISO (`make ostree-commit` with `debos`/`mmdebstrap`) inside Podman/Docker without polluting the host OS, how to sign kernels with MOK keys, atomic rollbacks (`ostree admin deploy --rollback`), and how to run the QEMU/KVM test suite (`make test-iso` and `make test-installed`).
+
+FILE 4: `wiki/Scientific-Stack-and-Kepler-Tuner.md`
+- User and developer guide for the Cytoscape dynamic JVM heap wrapper (`cytoscape-kepler`), Python/R OpenBLAS configuration, `kepler-science-shell` (Distrobox / Podman mutable workspace for custom scientific compilation), and how to use `kepler-tuner` to switch between *Silent Mobile*, *Balanced Desktop*, and *Scientific Compute* profiles.
+
+FILE 5: `wiki/Legal-EU-AI-Act-and-Credits.md`
+- Full Wiki reference for GPLv3 licensing, the EU AI Act transparency statement, the NASA/ESA/Kepler/Voyager non-affiliation notice, and upstream credits (Debian, GNOME, CachyOS, Calamares).

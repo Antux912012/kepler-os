@@ -1,0 +1,11 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+echo "=== [Kepler OS] Entering Mutable Scientific Pet Container (kepler-science-box) ==="
+if ! distrobox list | grep -q "kepler-science-box"; then
+    echo "Assembling kepler-science-box from /etc/distrobox/distrobox.ini..."
+    distrobox assemble create --file /etc/distrobox/distrobox.ini
+fi
+
+exec distrobox enter kepler-science-box "$@"

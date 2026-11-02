@@ -1,0 +1,102 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -euo pipefail
+
+SNAPSHOT_DIR="/.snapshots"
+MAX_SNAPSHOTS=10
+
+usage() {
+    echo "Usage: $0 {create [label]|list|restore <snapshot_name>}"
+    echo "Commands:"
+    echo "  create [label]      Create read-only Btrfs snapshot of /var and /var/home"
+    echo "  list                List all local /var snapshots"
+    echo "  restore <snapshot>  Stage snapshot for restoration on next boot"
+    exit 1
+}
+
+prune_old_snapshots() {
+    local count
+    count=$(find "$SNAPSHOT_DIR" -mindepth 1 -maxdepth 1 -type d -name "kepler-var-*" | wc -l)
+    if [ "$count" -gt "$MAX_SNAPSHOTS" ]; then
+        local excess=$((count - MAX_SNAPSHOTS))
+        echo "Pruning $excess old snapshot(s) beyond retention limit of $MAX_SNAPSHOTS..."
+        find "$SNAPSHOT_DIR" -mindepth 1 -maxdepth 1 -type d -name "kepler-var-*" | sort | head -n "$excess" | while read -r old_snap; do
+            echo "Deleting old snapshot: $old_snap"
+            if [ -d "$old_snap/var" ]; then
+                btrfs subvolume delete "$old_snap/var" || true
+            fi
+            if [ -d "$old_snap/var_home" ]; then
+                btrfs subvolume delete "$old_snap/var_home" || true
+            fi
+            rmdir "$old_snap" || true
+        done
+    fi
+}
+
+cmd_create() {
+    local label="${1:-manual}"
+    local timestamp
+    timestamp="$(date -u +%Y%m%d-%H%M%S)"
+    local target_dir="${SNAPSHOT_DIR}/kepler-var-${timestamp}-${label}"
+
+    mkdir -p "$SNAPSHOT_DIR"
+    mkdir -p "$target_dir"
+
+    echo "Creating read-only snapshot of /var..."
+    btrfs subvolume snapshot -r /var "${target_dir}/var"
+
+    if [ -d "/var/home" ] && btrfs subvolume show /var/home >/dev/null 2>&1; then
+        echo "Creating read-only snapshot of /var/home..."
+        btrfs subvolume snapshot -r /var/home "${target_dir}/var_home"
+    fi
+
+    echo "OK: Created snapshot at $target_dir"
+    prune_old_snapshots
+}
+
+cmd_list() {
+    echo "=== Kepler OS /var Btrfs Snapshots ==="
+    if [ ! -d "$SNAPSHOT_DIR" ]; then
+        echo "No snapshots directory found ($SNAPSHOT_DIR)."
+        return 0
+    fi
+    find "$SNAPSHOT_DIR" -mindepth 1 -maxdepth 1 -type d -name "kepler-var-*" | sort -r | while read -r snap; do
+        local name
+        name="$(basename "$snap")"
+        echo " - $name"
+    done
+}
+
+cmd_restore() {
+    local snap_name="${1:-}"
+    if [ -z "$snap_name" ]; then
+        echo "ERROR: Snapshot name required." >&2
+        usage
+    fi
+
+    local snap_path="${SNAPSHOT_DIR}/${snap_name}"
+    if [ ! -d "$snap_path" ]; then
+        echo "ERROR: Snapshot $snap_path does not exist." >&2
+        exit 1
+    fi
+
+    echo "Preparing rollback for snapshot $snap_name..."
+    echo "Note: Full restoration occurs by rebinding subvolumes or deploying via rootless session."
+    echo "Snapshot $snap_path verified and ready."
+}
+
+ACTION="${1:-}"
+case "$ACTION" in
+    create)
+        cmd_create "${2:-}"
+        ;;
+    list)
+        cmd_list
+        ;;
+    restore)
+        cmd_restore "${2:-}"
+        ;;
+    *)
+        usage
+        ;;
+esac

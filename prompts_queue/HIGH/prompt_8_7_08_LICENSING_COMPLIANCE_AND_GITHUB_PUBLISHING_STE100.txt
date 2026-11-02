@@ -1,0 +1,29 @@
+# PROMPT ID: 8.7 | TITLE: AUTOMATED DCO AND SPDX GPLv3 PR LINTER WORKFLOW
+# TARGET MODEL: Gemini 3.8 Flash [HIGH] (Raw: HIGH)
+# SOURCE MODULE: 08_LICENSING_COMPLIANCE_AND_GITHUB_PUBLISHING_STE100.md
+
+ROLE: DevSecOps & Open-Source Compliance Automation Architect.
+STANDARD: ASD-STE100 (Simplified Technical English). Output only valid YAML code with strict 2-space indentation. Do not include conversational prose.
+
+TASK:
+Create a GitHub Actions workflow file at `.github/workflows/lint-pr-compliance.yml` to automatically enforce DCO 1.1 sign-off, SPDX `GPL-3.0-or-later` license headers, and EU AI Act Pull Request disclosure on all Pull Requests.
+
+TECHNICAL REQUIREMENTS:
+1. Trigger the workflow on `pull_request` events (`types: [opened, synchronize, edited, reopened]`) targeting the `main` branch.
+2. Set permissions: `contents: read` and `pull-requests: read`.
+3. Job 1 (`dco_signoff_check`):
+   - Run on `ubuntu-latest`.
+   - Checkout the repository with full git history (`fetch-depth: 0`).
+   - Inspect every commit in the Pull Request range (`${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}`).
+   - Verify with `git log` and `grep -E '^Signed-off-by: .+ <.+@.+>$'` that every commit message contains a valid DCO 1.1 `Signed-off-by:` trailer.
+   - Print an ASD-STE100 error message and exit with code 1 if any commit lacks the trailer (`"ERROR: Commit <SHA> lacks a DCO Signed-off-by trailer. Run git commit --amend -s."`).
+4. Job 2 (`spdx_gplv3_header_check`):
+   - Run on `ubuntu-latest`.
+   - Checkout the repository (`fetch-depth: 0`).
+   - Find all added or modified source and script files (`*.rs`, `*.sh`, `*.py`, `*.R`, `*.vala`, `*.c`, `*.h`, `*.yml`, `*.yaml`, `Makefile`, `Containerfile`) in the Pull Request diff using `git diff --name-only --diff-filter=AM`.
+   - Verify that the first 15 lines of each modified file contain the exact string `SPDX-License-Identifier: GPL-3.0-or-later`.
+   - Print an ASD-STE100 error message listing each non-compliant file and exit with code 1 if the SPDX header is missing.
+5. Job 3 (`eu_ai_act_pr_body_check`):
+   - Run on `ubuntu-latest`.
+   - Inspect `${{ github.event.pull_request.body }}` to verify that the contributor completed the `EU AI ACT DISCLOSURE METADATA` section (`AI-Assisted Contribution:` set to `Yes` or `No`) as required by Regulation (EU) 2024/1689 (Article 50).
+   - Exit with code 1 if the disclosure field is missing or unedited.
